@@ -18,7 +18,8 @@ void Subject::unsubscribe(Observer& observer)
 
 void Subject::notify(const Event_enum event)
 {
-    for (auto* observer : observers_) {
+    const auto observers = observers_;
+    for (auto* observer : observers) {
         observer->update(event);
     }
 }
