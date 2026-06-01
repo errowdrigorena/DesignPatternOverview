@@ -4,3 +4,4 @@ project(DesignPatternOverview LANGUAGES CXX)
 
 add_subdirectory(Shapes)
 add_subdirectory(StrategyPattern)
+add_subdirectory(ObserverPattern)
