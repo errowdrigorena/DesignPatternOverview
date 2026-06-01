@@ -14,6 +14,20 @@ target_include_directories(StrategyPattern
 
 target_compile_features(StrategyPattern PUBLIC cxx_std_23)
 
+add_library(StrategyPatternFunction
+    src/Shapes_strategy_function/Circle.cpp
+    src/Shapes_strategy_function/DrawStrategies.cpp
+    src/Shapes_strategy_function/Rectangle.cpp
+    src/Shapes_strategy_function/Triangle.cpp
+)
+
+target_include_directories(StrategyPatternFunction
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(StrategyPatternFunction PUBLIC cxx_std_23)
+
 add_executable(StrategyPatternDemo
     src/ShapesStrategyDemo.cpp
 )
@@ -21,4 +35,13 @@ add_executable(StrategyPatternDemo
 target_link_libraries(StrategyPatternDemo
     PRIVATE
         StrategyPattern
+)
+
+add_executable(StrategyPatternFunctionDemo
+    src/ShapesStrategyFunctionDemo.cpp
+)
+
+target_link_libraries(StrategyPatternFunctionDemo
+    PRIVATE
+        StrategyPatternFunction
 )

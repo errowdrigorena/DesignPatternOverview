@@ -16,11 +16,19 @@ namespace {
 
 void StarDrawStrategy::draw_circle(const double radius) const
 {
+    const auto rounded_radius = rounded_dimension(radius);
+
     std::cout << "Circle with radius " << radius << '\n';
-    std::cout << " *** \n";
-    std::cout << "*   *\n";
-    std::cout << "*   *\n";
-    std::cout << " *** \n";
+
+    for (auto row = -rounded_radius; row <= rounded_radius; ++row) {
+        for (auto column = -rounded_radius; column <= rounded_radius; ++column) {
+            const auto distance_from_center = row * row + column * column;
+            const auto circle_radius = rounded_radius * rounded_radius;
+            std::cout << (distance_from_center <= circle_radius ? '*' : ' ');
+        }
+
+        std::cout << '\n';
+    }
 }
 
 void StarDrawStrategy::draw_rectangle(const double width, const double height) const
