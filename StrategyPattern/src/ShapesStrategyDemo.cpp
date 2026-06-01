@@ -1,9 +1,9 @@
-#include <Shapes_strategy/ApiDrawStrategy.hpp>
-#include <Shapes_strategy/Circle_strategy.hpp>
-#include <Shapes_strategy/Rectangle_strategy.hpp>
-#include <Shapes_strategy/Shapes.hpp>
-#include <Shapes_strategy/StarDrawStrategy.hpp>
-#include <Shapes_strategy/Triangle_strategy.hpp>
+#include <Shapes_strategy_classic/ApiDrawStrategy.hpp>
+#include <Shapes_strategy_classic/Circle_strategy.hpp>
+#include <Shapes_strategy_classic/Rectangle_strategy.hpp>
+#include <Shapes_strategy_classic/Shapes.hpp>
+#include <Shapes_strategy_classic/StarDrawStrategy.hpp>
+#include <Shapes_strategy_classic/Triangle_strategy.hpp>
 
 #include <iostream>
 #include <memory>

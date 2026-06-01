@@ -1,4 +1,4 @@
-#include <Shapes_strategy/ApiDrawStrategy.hpp>
+#include <Shapes_strategy_classic/ApiDrawStrategy.hpp>
 
 #include <iostream>
 

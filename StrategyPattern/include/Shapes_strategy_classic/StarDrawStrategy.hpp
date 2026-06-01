@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_strategy/DrawStrategy.hpp>
+#include <Shapes_strategy_classic/DrawStrategy.hpp>
 
 namespace shapes_strategy {
 

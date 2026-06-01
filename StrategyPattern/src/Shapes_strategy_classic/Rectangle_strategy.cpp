@@ -1,4 +1,4 @@
-#include <Shapes_strategy/Rectangle_strategy.hpp>
+#include <Shapes_strategy_classic/Rectangle_strategy.hpp>
 
 #include <utility>
 

@@ -1,4 +1,4 @@
-#include <Shapes_strategy/Circle_strategy.hpp>
+#include <Shapes_strategy_classic/Circle_strategy.hpp>
 
 #include <numbers>
 #include <utility>

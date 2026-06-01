@@ -1,4 +1,4 @@
-#include <Shapes_strategy/Shapes.hpp>
+#include <Shapes_strategy_classic/Shapes.hpp>
 
 #include <stdexcept>
 #include <utility>

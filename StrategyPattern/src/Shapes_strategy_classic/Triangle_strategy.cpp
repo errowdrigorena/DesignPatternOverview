@@ -1,4 +1,4 @@
-#include <Shapes_strategy/Triangle_strategy.hpp>
+#include <Shapes_strategy_classic/Triangle_strategy.hpp>
 
 #include <utility>
 

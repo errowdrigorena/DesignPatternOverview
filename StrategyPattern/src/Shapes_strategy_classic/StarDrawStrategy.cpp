@@ -1,4 +1,4 @@
-#include <Shapes_strategy/StarDrawStrategy.hpp>
+#include <Shapes_strategy_classic/StarDrawStrategy.hpp>
 
 #include <algorithm>
 #include <cmath>
