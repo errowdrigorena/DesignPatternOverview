@@ -1,4 +1,4 @@
-#include <ObserverPattern/Subject.hpp>
+#include <ObserverPattern_classic/Subject.hpp>
 
 #include <algorithm>
 

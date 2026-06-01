@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ObserverPattern/Event.hpp>
-#include <ObserverPattern/Observer.hpp>
+#include <ObserverPattern_common/Event.hpp>
+#include <ObserverPattern_classic/Observer.hpp>
 
 #include <string>
 

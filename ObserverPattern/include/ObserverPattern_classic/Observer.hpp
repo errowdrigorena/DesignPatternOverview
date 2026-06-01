@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ObserverPattern/Event.hpp>
+#include <ObserverPattern_common/Event.hpp>
 
 namespace observer_pattern {
 

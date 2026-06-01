@@ -1,6 +1,6 @@
 add_library(ObserverPattern
-    src/ConsoleObserver.cpp
-    src/Subject.cpp
+    src/ObserverPattern_classic/ConsoleObserver.cpp
+    src/ObserverPattern_classic/Subject.cpp
 )
 
 target_include_directories(ObserverPattern
@@ -10,6 +10,15 @@ target_include_directories(ObserverPattern
 
 target_compile_features(ObserverPattern PUBLIC cxx_std_23)
 
+add_library(ObserverPatternModern INTERFACE)
+
+target_include_directories(ObserverPatternModern
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(ObserverPatternModern INTERFACE cxx_std_23)
+
 add_executable(ObserverPatternDemo
     src/ObserverPatternDemo.cpp
 )
@@ -17,4 +26,13 @@ add_executable(ObserverPatternDemo
 target_link_libraries(ObserverPatternDemo
     PRIVATE
         ObserverPattern
+)
+
+add_executable(ObserverPatternModernDemo
+    src/ObserverPatternModernDemo.cpp
+)
+
+target_link_libraries(ObserverPatternModernDemo
+    PRIVATE
+        ObserverPatternModern
 )

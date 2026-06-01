@@ -1,6 +1,6 @@
-#include <ObserverPattern/ConsoleObserver.hpp>
-#include <ObserverPattern/Event.hpp>
-#include <ObserverPattern/Subject.hpp>
+#include <ObserverPattern_classic/ConsoleObserver.hpp>
+#include <ObserverPattern_common/Event.hpp>
+#include <ObserverPattern_classic/Subject.hpp>
 
 int main()
 {

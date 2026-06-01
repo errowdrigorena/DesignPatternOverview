@@ -1,4 +1,4 @@
-#include <ObserverPattern/ConsoleObserver.hpp>
+#include <ObserverPattern_classic/ConsoleObserver.hpp>
 
 #include <iostream>
 #include <utility>
