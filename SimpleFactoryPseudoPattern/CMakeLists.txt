@@ -30,6 +30,24 @@ target_link_libraries(SimpleFactoryPseudoPatternMap
         Shapes_traditional
 )
 
+add_library(SimpleFactoryPseudoPatternStatic
+    src/SimpleFactoryPseudoPattern_static/CircleFactory.cpp
+    src/SimpleFactoryPseudoPattern_static/RectangleFactory.cpp
+    src/SimpleFactoryPseudoPattern_static/TriangleFactory.cpp
+)
+
+target_include_directories(SimpleFactoryPseudoPatternStatic
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(SimpleFactoryPseudoPatternStatic PUBLIC cxx_std_23)
+
+target_link_libraries(SimpleFactoryPseudoPatternStatic
+    PUBLIC
+        Shapes_traditional
+)
+
 add_library(SimpleFactoryPseudoPatternTemplate INTERFACE)
 
 target_include_directories(SimpleFactoryPseudoPatternTemplate
@@ -60,6 +78,15 @@ add_executable(SimpleFactoryPseudoPatternMapDemo
 target_link_libraries(SimpleFactoryPseudoPatternMapDemo
     PRIVATE
         SimpleFactoryPseudoPatternMap
+)
+
+add_executable(SimpleFactoryPseudoPatternStaticDemo
+    src/SimpleFactoryPseudoPatternStaticDemo.cpp
+)
+
+target_link_libraries(SimpleFactoryPseudoPatternStaticDemo
+    PRIVATE
+        SimpleFactoryPseudoPatternStatic
 )
 
 add_executable(SimpleFactoryPseudoPatternTemplateDemo
