@@ -1,5 +1,5 @@
 #include <ObserverPattern_common/Event.hpp>
-#include <ObserverPattern_modern/Signal.hpp>
+#include <ObserverPattern_modern/signal_slot/Signal.hpp>
 
 #include <iostream>
 #include <string_view>
