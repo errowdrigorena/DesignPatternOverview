@@ -13,6 +13,15 @@ target_include_directories(DecoratorPatternClassic
 
 target_compile_features(DecoratorPatternClassic PUBLIC cxx_std_23)
 
+add_library(DecoratorPatternModern INTERFACE)
+
+target_include_directories(DecoratorPatternModern
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(DecoratorPatternModern INTERFACE cxx_std_23)
+
 add_executable(DecoratorPatternDemo
     src/DecoratorPatternDemo.cpp
 )
@@ -20,4 +29,13 @@ add_executable(DecoratorPatternDemo
 target_link_libraries(DecoratorPatternDemo
     PRIVATE
         DecoratorPatternClassic
+)
+
+add_executable(DecoratorPatternModernDemo
+    src/DecoratorPatternModernDemo.cpp
+)
+
+target_link_libraries(DecoratorPatternModernDemo
+    PRIVATE
+        DecoratorPatternModern
 )
