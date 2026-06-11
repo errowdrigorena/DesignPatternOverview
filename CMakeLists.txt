@@ -12,6 +12,7 @@ add_subdirectory(SimpleFactoryPseudoPattern)
 add_subdirectory(SingletonPattern)
 add_subdirectory(VisitorPattern)
 add_subdirectory(DecoratorPattern)
+add_subdirectory(FacadePattern)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
