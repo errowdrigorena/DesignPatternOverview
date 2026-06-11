@@ -36,3 +36,12 @@ target_link_libraries(ObserverPatternModernDemo
     PRIVATE
         ObserverPatternModern
 )
+
+add_executable(ObserverPatternFilteredDemo
+    src/ObserverPatternFilteredDemo.cpp
+)
+
+target_link_libraries(ObserverPatternFilteredDemo
+    PRIVATE
+        ObserverPatternModern
+)
