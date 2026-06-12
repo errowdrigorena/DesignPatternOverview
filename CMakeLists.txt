@@ -21,6 +21,7 @@ add_subdirectory(VisitorPattern)
 add_subdirectory(DecoratorPattern)
 add_subdirectory(FacadePattern)
 add_subdirectory(TemplateMethodPattern)
+add_subdirectory(PrototypePattern)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
