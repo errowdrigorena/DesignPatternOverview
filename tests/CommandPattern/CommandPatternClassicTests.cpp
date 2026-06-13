@@ -1,14 +1,13 @@
-#include <CommandPattern_classic/Command.hpp>
 #include <CommandPattern_classic/CommandHistory.hpp>
 #include <CommandPattern_classic/DoBoringCommand.hpp>
 #include <CommandPattern_classic/DoCoolCommand.hpp>
+#include <TestDoubles/Spies/RecordingCommand.hpp>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace {
@@ -19,29 +18,7 @@ using testing::IsEmpty;
 
 using command_pattern_classic::DoBoringCommand;
 using command_pattern_classic::DoCoolCommand;
-
-class RecordingCommand final : public command_pattern_classic::Command {
-public:
-    RecordingCommand(std::vector<std::string>& events, std::string name)
-        : events_{events}
-        , name_{std::move(name)}
-    {
-    }
-
-    void execute() override
-    {
-        events_.push_back("execute " + name_);
-    }
-
-    void undo() override
-    {
-        events_.push_back("undo " + name_);
-    }
-
-private:
-    std::vector<std::string>& events_;
-    std::string name_;
-};
+using test_doubles::spies::RecordingCommand;
 
 TEST(ClassicDoCoolCommand, ExecuteWritesMessage)
 {

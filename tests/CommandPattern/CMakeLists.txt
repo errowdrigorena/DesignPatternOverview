@@ -9,6 +9,11 @@ target_link_libraries(CommandPatternClassicTests
         GTest::gtest_main
 )
 
+target_include_directories(CommandPatternClassicTests
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/tests
+)
+
 target_compile_features(CommandPatternClassicTests PRIVATE cxx_std_23)
 
 gtest_discover_tests(CommandPatternClassicTests)

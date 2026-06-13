@@ -1,14 +1,12 @@
 #include <ObserverPattern_classic/ConsoleObserver.hpp>
-#include <ObserverPattern_classic/Observer.hpp>
 #include <ObserverPattern_classic/Subject.hpp>
 #include <ObserverPattern_common/Event.hpp>
+#include <TestDoubles/Spies/ObserverSpies.hpp>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <ostream>
 #include <sstream>
-#include <vector>
 
 namespace {
 
@@ -17,35 +15,8 @@ using observer_pattern::Subject;
 using testing::ElementsAre;
 using testing::HasSubstr;
 using testing::IsEmpty;
-
-class RecordingObserver final : public observer_pattern::Observer {
-public:
-    void update(const Event_enum event) override
-    {
-        events.push_back(event);
-    }
-
-    std::vector<Event_enum> events;
-};
-
-class SelfUnsubscribingObserver final : public observer_pattern::Observer {
-public:
-    explicit SelfUnsubscribingObserver(Subject& subject)
-        : subject_{subject}
-    {
-    }
-
-    void update(const Event_enum event) override
-    {
-        events.push_back(event);
-        subject_.unsubscribe(*this);
-    }
-
-    std::vector<Event_enum> events;
-
-private:
-    Subject& subject_;
-};
+using test_doubles::spies::RecordingObserver;
+using test_doubles::spies::SelfUnsubscribingObserver;
 
 TEST(EventEnum, StreamsKnownEvents)
 {
