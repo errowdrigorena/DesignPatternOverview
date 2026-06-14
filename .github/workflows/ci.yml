@@ -211,6 +211,7 @@ jobs:
         env:
           COVERAGE_PERCENTAGE: ${{ steps.coverage-summary.outputs.percentage }}
         run: |
+          repo_dir="$GITHUB_WORKSPACE"
           percentage_value="${COVERAGE_PERCENTAGE%%%}"
           color="$(awk -v value="$percentage_value" 'BEGIN {
             if (value >= 90) print "brightgreen";
@@ -223,18 +224,18 @@ jobs:
 
           printf '{"schemaVersion":1,"label":"coverage","message":"%s","color":"%s"}\n' \
             "$COVERAGE_PERCENTAGE" \
-            "$color" > coverage-badge.json
+            "$color" > "$repo_dir/coverage-badge.json"
 
-          if git diff --quiet -- coverage-badge.json; then
+          if git -C "$repo_dir" diff --quiet -- coverage-badge.json; then
             echo "Coverage badge data is already up to date."
             exit 0
           fi
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add coverage-badge.json
-          git commit -m "Update coverage badge"
-          git push
+          git -C "$repo_dir" config user.name "github-actions[bot]"
+          git -C "$repo_dir" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$repo_dir" add coverage-badge.json
+          git -C "$repo_dir" commit -m "Update coverage badge"
+          git -C "$repo_dir" push
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
