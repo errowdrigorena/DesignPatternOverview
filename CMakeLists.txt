@@ -9,6 +9,17 @@ set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+option(ENABLE_COVERAGE "Build with coverage instrumentation" OFF)
+
+if(ENABLE_COVERAGE)
+    if(NOT CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        message(FATAL_ERROR "ENABLE_COVERAGE requires GCC or Clang")
+    endif()
+
+    add_compile_options(-O0 -g --coverage)
+    add_link_options(--coverage)
+endif()
+
 include(CTest)
 
 add_subdirectory(Shapes)
@@ -25,4 +36,32 @@ add_subdirectory(PrototypePattern)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
+
+    if(ENABLE_COVERAGE)
+        find_program(GCOV_COMMAND gcov REQUIRED)
+        set(COVERAGE_COMMAND "${GCOV_COMMAND}" CACHE FILEPATH "Coverage tool")
+
+        set(COVERAGE_TEST_TARGETS
+            CommandPatternClassicTests
+            CommandPatternModernTests
+            DecoratorPatternClassicTests
+            DecoratorPatternModernTests
+            ObserverPatternClassicTests
+            ObserverPatternModernTests
+            SimpleFactoryPseudoPatternRuntimeTests
+            SimpleFactoryPseudoPatternTemplateTests
+            SingletonPatternTests
+            StrategyPatternClassicTests
+            StrategyPatternFunctionTests
+        )
+
+        add_custom_target(coverage
+            DEPENDS ${COVERAGE_TEST_TARGETS}
+            COMMAND ${CMAKE_CTEST_COMMAND} --test-dir ${CMAKE_BINARY_DIR} --output-on-failure
+            COMMAND ${CMAKE_CTEST_COMMAND} -T Coverage --test-dir ${CMAKE_BINARY_DIR}
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMENT "Running tests and collecting coverage"
+            VERBATIM
+        )
+    endif()
 endif()
