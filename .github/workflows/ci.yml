@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
 
 jobs:
   workflow-lint:
@@ -89,6 +87,10 @@ jobs:
     container:
       image: gcc:15
     timeout-minutes: 20
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
 
     steps:
       - name: Install system tools
@@ -203,6 +205,36 @@ jobs:
                 body,
               });
             }
+
+      - name: Update coverage badge data
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          COVERAGE_PERCENTAGE: ${{ steps.coverage-summary.outputs.percentage }}
+        run: |
+          percentage_value="${COVERAGE_PERCENTAGE%%%}"
+          color="$(awk -v value="$percentage_value" 'BEGIN {
+            if (value >= 90) print "brightgreen";
+            else if (value >= 80) print "green";
+            else if (value >= 70) print "yellowgreen";
+            else if (value >= 60) print "yellow";
+            else if (value >= 50) print "orange";
+            else print "red";
+          }')"
+
+          printf '{"schemaVersion":1,"label":"coverage","message":"%s","color":"%s"}\n' \
+            "$COVERAGE_PERCENTAGE" \
+            "$color" > coverage-badge.json
+
+          if git diff --quiet -- coverage-badge.json; then
+            echo "Coverage badge data is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add coverage-badge.json
+          git commit -m "Update coverage badge"
+          git push
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
