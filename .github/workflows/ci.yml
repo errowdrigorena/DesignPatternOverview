@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: read
+  issues: write
+  pull-requests: write
 
 jobs:
   workflow-lint:
@@ -128,16 +130,79 @@ jobs:
         run: cmake --build build-coverage --target coverage --parallel
 
       - name: Publish coverage summary
+        id: coverage-summary
         run: |
           coverage_log="$(find build-coverage/Testing/Temporary -name 'LastCoverage_*.log' -print -quit)"
+          covered_loc="$(grep 'Covered LOC' "$coverage_log" | awk '{print $3}')"
+          not_covered_loc="$(grep 'Not covered LOC' "$coverage_log" | awk '{print $4}')"
+          total_loc="$(grep 'Total LOC' "$coverage_log" | awk '{print $3}')"
+          percentage="$(grep 'Percentage Coverage' "$coverage_log" | awk '{print $3}')"
+
+          {
+            echo "covered_loc=$covered_loc"
+            echo "not_covered_loc=$not_covered_loc"
+            echo "total_loc=$total_loc"
+            echo "percentage=$percentage"
+          } >> "$GITHUB_OUTPUT"
 
           {
             echo "## Coverage"
             echo
-            echo '```text'
-            grep -E 'Covered LOC|Not covered LOC|Total LOC|Percentage Coverage' "$coverage_log"
-            echo '```'
+            echo "| Metric | Value |"
+            echo "| --- | ---: |"
+            echo "| Covered LOC | $covered_loc |"
+            echo "| Not covered LOC | $not_covered_loc |"
+            echo "| Total LOC | $total_loc |"
+            echo "| Coverage | $percentage |"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Comment coverage on pull request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          COVERED_LOC: ${{ steps.coverage-summary.outputs.covered_loc }}
+          NOT_COVERED_LOC: ${{ steps.coverage-summary.outputs.not_covered_loc }}
+          TOTAL_LOC: ${{ steps.coverage-summary.outputs.total_loc }}
+          COVERAGE_PERCENTAGE: ${{ steps.coverage-summary.outputs.percentage }}
+        with:
+          script: |
+            const marker = '<!-- design-pattern-overview-coverage -->';
+            const body = `${marker}
+            ## Coverage
+
+            | Metric | Value |
+            | --- | ---: |
+            | Covered LOC | ${process.env.COVERED_LOC} |
+            | Not covered LOC | ${process.env.NOT_COVERED_LOC} |
+            | Total LOC | ${process.env.TOTAL_LOC} |
+            | Coverage | ${process.env.COVERAGE_PERCENTAGE} |
+            `;
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number,
+              per_page: 100,
+            });
+            const existing = comments.find((comment) => comment.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number,
+                body,
+              });
+            }
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
