@@ -53,6 +53,11 @@ if(BUILD_TESTING)
             SingletonPatternTests
             StrategyPatternClassicTests
             StrategyPatternFunctionTests
+            TemplateMethodPatternCallableTests
+            TemplateMethodPatternClassicTests
+            TemplateMethodPatternConceptsTests
+            TemplateMethodPatternCrtpTests
+            TemplateMethodPatternDeducingThisTests
         )
 
         add_custom_target(coverage

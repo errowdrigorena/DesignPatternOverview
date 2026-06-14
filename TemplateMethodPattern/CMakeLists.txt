@@ -42,20 +42,20 @@ endfunction()
 
 add_template_method_modern_demo(
     TemplateMethodPatternModernCrtpDemo
-    src/TemplateMethodPatternModernCrtpDemo.cpp
+    src/TemplateMethodPattern_modern/crtp/TemplateMethodPatternModernCrtpDemo.cpp
 )
 
 add_template_method_modern_demo(
     TemplateMethodPatternModernConceptsDemo
-    src/TemplateMethodPatternModernConceptsDemo.cpp
+    src/TemplateMethodPattern_modern/concepts/TemplateMethodPatternModernConceptsDemo.cpp
 )
 
 add_template_method_modern_demo(
     TemplateMethodPatternModernCallableDemo
-    src/TemplateMethodPatternModernCallableDemo.cpp
+    src/TemplateMethodPattern_modern/callable/TemplateMethodPatternModernCallableDemo.cpp
 )
 
 add_template_method_modern_demo(
     TemplateMethodPatternModernDeducingThisDemo
-    src/TemplateMethodPatternModernDeducingThisDemo.cpp
+    src/TemplateMethodPattern_modern/deducing_this/TemplateMethodPatternModernDeducingThisDemo.cpp
 )
