@@ -60,6 +60,8 @@ if(BUILD_TESTING)
             TemplateMethodPatternConceptsTests
             TemplateMethodPatternCrtpTests
             TemplateMethodPatternDeducingThisTests
+            VisitorPatternClassicTests
+            VisitorPatternModernTests
         )
 
         add_custom_target(coverage
