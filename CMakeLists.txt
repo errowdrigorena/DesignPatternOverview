@@ -49,6 +49,8 @@ if(BUILD_TESTING)
             FacadePatternClassicTests
             ObserverPatternClassicTests
             ObserverPatternModernTests
+            PrototypePatternClassicTests
+            PrototypePatternModernTests
             SimpleFactoryPseudoPatternRuntimeTests
             SimpleFactoryPseudoPatternTemplateTests
             ShapesModernTests
