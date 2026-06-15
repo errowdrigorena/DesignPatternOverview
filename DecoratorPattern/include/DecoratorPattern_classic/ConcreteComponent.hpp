@@ -6,7 +6,7 @@ namespace decorator_pattern_classic {
 
 class ConcreteComponent final : public Component {
 public:
-    void operation() override;
+    void operation() const override;
 };
 
 }  // namespace decorator_pattern_classic

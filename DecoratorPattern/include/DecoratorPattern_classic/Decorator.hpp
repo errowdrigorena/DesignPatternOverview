@@ -9,7 +9,7 @@ namespace decorator_pattern_classic {
 class Decorator : public Component {
 public:
     explicit Decorator(std::unique_ptr<Component> component);
-    void operation() override;
+    void operation() const override;
 
 protected:
     std::unique_ptr<Component> component_;

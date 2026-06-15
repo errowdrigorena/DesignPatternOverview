@@ -1,8 +1,7 @@
 #pragma once
 
 #include <concepts>
-#include <iosfwd>
-#include <iostream>
+#include <ostream>
 #include <string>
 #include <string_view>
 

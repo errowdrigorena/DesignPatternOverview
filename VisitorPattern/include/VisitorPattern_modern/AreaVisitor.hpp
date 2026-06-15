@@ -9,7 +9,7 @@ namespace visitor_pattern_modern {
 struct AreaVisitor {
     [[nodiscard]] double operator()(const Circle& circle) const
     {
-        return std::numbers::pi * circle.radius * circle.radius;
+        return std::numbers::pi_v<double> * circle.radius * circle.radius;
     }
 
     [[nodiscard]] double operator()(const Rectangle& rectangle) const

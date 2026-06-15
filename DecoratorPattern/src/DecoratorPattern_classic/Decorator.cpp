@@ -6,7 +6,7 @@ Decorator::Decorator(std::unique_ptr<Component> component)
     : component_(std::move(component))
 {}
 
-void Decorator::operation()
+void Decorator::operation() const
 {
     component_->operation();
 }

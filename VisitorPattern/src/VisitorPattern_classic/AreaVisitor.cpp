@@ -10,7 +10,7 @@ namespace visitor_pattern_classic {
 
 void AreaVisitor::visit(const Circle& circle)
 {
-    area_ = std::numbers::pi * circle.radius() * circle.radius();
+    area_ = std::numbers::pi_v<double> * circle.radius() * circle.radius();
 }
 
 void AreaVisitor::visit(const Rectangle& rectangle)

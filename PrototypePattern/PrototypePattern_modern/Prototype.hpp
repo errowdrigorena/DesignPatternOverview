@@ -15,7 +15,7 @@ namespace prototype_pattern_modern
     public:
         virtual ~ReportExporter() = default;
 
-        // this only makes sense in C++ when we are talking about polymorfism
+        // this only makes sense in C++ when we are talking about polymorphism
         [[nodiscard]] virtual std::unique_ptr<ReportExporter> clone() const = 0;
         virtual void set_report_title(std::string title) = 0;
         virtual void add_column(std::string column) = 0;
@@ -75,7 +75,7 @@ namespace prototype_pattern_modern
             return *this;
         }
 
-        // this only makes sense in C++ when we are talking about polymorfism
+        // this only makes sense in C++ when we are talking about polymorphism
         [[nodiscard]] std::unique_ptr<ReportExporter> clone() const override
         {
             return std::make_unique<CsvReportExporter>(*this);

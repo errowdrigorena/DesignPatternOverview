@@ -4,7 +4,7 @@
 
 namespace decorator_pattern_classic {
 
-void ConcreteDecoratorC::operation()
+void ConcreteDecoratorC::operation() const
 {
     Decorator::operation();
     std::cout << " + DecoratorC";
