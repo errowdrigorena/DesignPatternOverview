@@ -50,6 +50,8 @@ if(BUILD_TESTING)
             ObserverPatternModernTests
             SimpleFactoryPseudoPatternRuntimeTests
             SimpleFactoryPseudoPatternTemplateTests
+            ShapesModernTests
+            ShapesTraditionalTests
             SingletonPatternTests
             StrategyPatternClassicTests
             StrategyPatternFunctionTests
