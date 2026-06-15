@@ -106,7 +106,7 @@ jobs:
           python3 -m venv .venv
           . .venv/bin/activate
           pip install --upgrade pip
-          pip install "cmake>=3.25" "conan>=2,<3"
+          pip install "cmake>=3.25" "conan>=2,<3" "gcovr>=8,<9"
 
           echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
           ln -sf "$(command -v g++)" /usr/local/bin/g++-15
@@ -128,35 +128,53 @@ jobs:
             -DENABLE_COVERAGE=ON \
             -DCMAKE_TOOLCHAIN_FILE=build-coverage/conan/build/Debug/generators/conan_toolchain.cmake
 
-      - name: Build, test, and collect coverage
-        run: cmake --build build-coverage --target coverage --parallel
+      - name: Build and test with coverage
+        run: |
+          cmake --build build-coverage --parallel
+          ctest --test-dir build-coverage --output-on-failure
 
       - name: Publish coverage summary
         id: coverage-summary
         run: |
-          coverage_log="$(find build-coverage/Testing/Temporary -name 'LastCoverage_*.log' -print -quit)"
-          covered_loc="$(grep 'Covered LOC' "$coverage_log" | awk '{print $3}')"
-          not_covered_loc="$(grep 'Not covered LOC' "$coverage_log" | awk '{print $4}')"
-          total_loc="$(grep 'Total LOC' "$coverage_log" | awk '{print $3}')"
-          percentage="$(grep 'Percentage Coverage' "$coverage_log" | awk '{print $3}')"
+          gcovr \
+            --root . \
+            --filter '(.*/)?(CommandPattern|DecoratorPattern|FacadePattern|ObserverPattern|PrototypePattern|Shapes|SimpleFactoryPseudoPattern|SingletonPattern|StrategyPattern|TemplateMethodPattern|VisitorPattern)/(include|src)/' \
+            --exclude '(.*/)?[^/]*Demo\.cpp$' \
+            --exclude '(.*/)?tests/' \
+            --exclude '(.*/)?build-coverage/' \
+            --json-summary-pretty \
+            --json-summary coverage-summary.json \
+            --xml-pretty \
+            --xml coverage.xml
 
-          {
-            echo "covered_loc=$covered_loc"
-            echo "not_covered_loc=$not_covered_loc"
-            echo "total_loc=$total_loc"
-            echo "percentage=$percentage"
-          } >> "$GITHUB_OUTPUT"
+          python3 - <<'PY'
+          import json
+          import os
 
-          {
-            echo "## Coverage"
-            echo
-            echo "| Metric | Value |"
-            echo "| --- | ---: |"
-            echo "| Covered LOC | $covered_loc |"
-            echo "| Not covered LOC | $not_covered_loc |"
-            echo "| Total LOC | $total_loc |"
-            echo "| Coverage | $percentage |"
-          } >> "$GITHUB_STEP_SUMMARY"
+          with open("coverage-summary.json", encoding="utf-8") as coverage_file:
+              coverage = json.load(coverage_file)
+
+          covered_loc = int(coverage["line_covered"])
+          total_loc = int(coverage["line_total"])
+          not_covered_loc = total_loc - covered_loc
+          percentage = f'{float(coverage["line_percent"]):.2f}%'
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              print(f"covered_loc={covered_loc}", file=output)
+              print(f"not_covered_loc={not_covered_loc}", file=output)
+              print(f"total_loc={total_loc}", file=output)
+              print(f"percentage={percentage}", file=output)
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              print("## Coverage", file=summary)
+              print(file=summary)
+              print("| Metric | Value |", file=summary)
+              print("| --- | ---: |", file=summary)
+              print(f"| Covered LOC | {covered_loc} |", file=summary)
+              print(f"| Not covered LOC | {not_covered_loc} |", file=summary)
+              print(f"| Total LOC | {total_loc} |", file=summary)
+              print(f"| Coverage | {percentage} |", file=summary)
+          PY
 
       - name: Comment coverage on pull request
         if: github.event_name == 'pull_request'
@@ -267,5 +285,5 @@ jobs:
         with:
           name: coverage-report
           path: |
-            build-coverage/Testing/**/Coverage.xml
-            build-coverage/Testing/**/CoverageLog-*.xml
+            coverage-summary.json
+            coverage.xml
