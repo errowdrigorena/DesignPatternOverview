@@ -46,6 +46,7 @@ if(BUILD_TESTING)
             CommandPatternModernTests
             DecoratorPatternClassicTests
             DecoratorPatternModernTests
+            FacadePatternClassicTests
             ObserverPatternClassicTests
             ObserverPatternModernTests
             SimpleFactoryPseudoPatternRuntimeTests
