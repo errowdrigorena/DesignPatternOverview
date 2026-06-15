@@ -92,6 +92,42 @@ TEST(FunctionStrategyRectangle, DrawDelegatesToCurrentCallable)
     expect_draw_call(calls.front(), "rectangle", 4.0, 2.5);
 }
 
+TEST(FunctionStrategyRectangle, CanReplaceCallableStrategy)
+{
+    std::vector<std::string> calls;
+    Rectangle rectangle{4.0, 2.5, [&calls](Rectangle const&) {
+                            calls.push_back("first");
+                        }};
+
+    rectangle.set_strategy([&calls](Rectangle const&) {
+        calls.push_back("second");
+    });
+
+    rectangle.draw();
+
+    EXPECT_THAT(calls, ElementsAre("second"));
+}
+
+TEST(FunctionStrategyRectangle, RejectsEmptyCallableInConstructor)
+{
+    const auto construct_without_strategy = [] {
+        [[maybe_unused]] const Rectangle rectangle{4.0, 2.5, {}};
+    };
+
+    EXPECT_THAT(construct_without_strategy, Throws<std::invalid_argument>());
+}
+
+TEST(FunctionStrategyRectangle, RejectsEmptyCallableWhenReplacing)
+{
+    Rectangle rectangle{4.0, 2.5, [](Rectangle const&) {}};
+
+    const auto replace_with_empty_strategy = [&rectangle] {
+        rectangle.set_strategy({});
+    };
+
+    EXPECT_THAT(replace_with_empty_strategy, Throws<std::invalid_argument>());
+}
+
 TEST(FunctionStrategyTriangle, ExposesDimensionsAndCalculatesArea)
 {
     const Triangle triangle{6.0, 3.0, [](Triangle const&) {}};
@@ -112,6 +148,42 @@ TEST(FunctionStrategyTriangle, DrawDelegatesToCurrentCallable)
 
     ASSERT_EQ(calls.size(), 1);
     expect_draw_call(calls.front(), "triangle", 6.0, 3.0);
+}
+
+TEST(FunctionStrategyTriangle, CanReplaceCallableStrategy)
+{
+    std::vector<std::string> calls;
+    Triangle triangle{6.0, 3.0, [&calls](Triangle const&) {
+                          calls.push_back("first");
+                      }};
+
+    triangle.set_strategy([&calls](Triangle const&) {
+        calls.push_back("second");
+    });
+
+    triangle.draw();
+
+    EXPECT_THAT(calls, ElementsAre("second"));
+}
+
+TEST(FunctionStrategyTriangle, RejectsEmptyCallableInConstructor)
+{
+    const auto construct_without_strategy = [] {
+        [[maybe_unused]] const Triangle triangle{6.0, 3.0, {}};
+    };
+
+    EXPECT_THAT(construct_without_strategy, Throws<std::invalid_argument>());
+}
+
+TEST(FunctionStrategyTriangle, RejectsEmptyCallableWhenReplacing)
+{
+    Triangle triangle{6.0, 3.0, [](Triangle const&) {}};
+
+    const auto replace_with_empty_strategy = [&triangle] {
+        triangle.set_strategy({});
+    };
+
+    EXPECT_THAT(replace_with_empty_strategy, Throws<std::invalid_argument>());
 }
 
 TEST(FunctionStrategy, CanReplaceCallableStrategy)
