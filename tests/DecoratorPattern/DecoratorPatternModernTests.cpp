@@ -37,6 +37,28 @@ TEST(ModernDecorator, SingleDecoratorExtendsBaseType)
     EXPECT_THAT(output, Eq("ConcreteComponent + DecoratorA"));
 }
 
+TEST(ModernDecorator, DecoratorBExtendsBaseType)
+{
+    DecoratorB<ConcreteComponent> component;
+
+    testing::internal::CaptureStdout();
+    component.operation();
+    const auto output = testing::internal::GetCapturedStdout();
+
+    EXPECT_THAT(output, Eq("ConcreteComponent + DecoratorB"));
+}
+
+TEST(ModernDecorator, DecoratorCExtendsBaseType)
+{
+    DecoratorC<ConcreteComponent> component;
+
+    testing::internal::CaptureStdout();
+    component.operation();
+    const auto output = testing::internal::GetCapturedStdout();
+
+    EXPECT_THAT(output, Eq("ConcreteComponent + DecoratorC"));
+}
+
 TEST(ModernDecorator, StackedDecoratorsRunFromBaseToMostDerived)
 {
     DecoratorA<DecoratorB<DecoratorC<ConcreteComponent>>> component;
