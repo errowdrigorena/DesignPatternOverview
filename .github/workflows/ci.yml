@@ -138,7 +138,7 @@ jobs:
         run: |
           gcovr \
             --root . \
-            --filter '(.*/)?(CommandPattern|DecoratorPattern|FacadePattern|ObserverPattern|PrototypePattern|Shapes|SimpleFactoryPseudoPattern|SingletonPattern|StrategyPattern|TemplateMethodPattern|VisitorPattern)/(include|src)/' \
+            --filter '(.*/)?((CommandPattern|DecoratorPattern|FacadePattern|ObserverPattern|Shapes|SimpleFactoryPseudoPattern|SingletonPattern|StrategyPattern|TemplateMethodPattern|VisitorPattern)/(include|src)/|PrototypePattern/PrototypePattern_(classic|modern)/)' \
             --exclude '(.*/)?[^/]*Demo\.cpp$' \
             --exclude '(.*/)?tests/' \
             --exclude '(.*/)?build-coverage/' \
