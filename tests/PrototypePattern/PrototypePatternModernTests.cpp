@@ -61,6 +61,18 @@ TEST(ModernCsvPrototype, CopyAndMoveAssignmentKeepIndependentState)
     EXPECT_EQ(describe(moved), "CsvReportExporter{title=Copied source, separator='|', columns=[id, amount, status]}\n");
 }
 
+TEST(ModernCsvPrototype, MoveConstructionTransfersState)
+{
+    CsvReportExporter source{"Source", '|'};
+    source.add_column("id");
+    source.add_column("amount");
+
+    CsvReportExporter moved{std::move(source)};
+    moved.add_column("status");
+
+    EXPECT_EQ(describe(moved), "CsvReportExporter{title=Source, separator='|', columns=[id, amount, status]}\n");
+}
+
 TEST(ModernCsvPrototype, SelfAssignmentKeepsState)
 {
     CsvReportExporter exporter{"Self", ','};
@@ -109,6 +121,18 @@ TEST(ModernJsonPrototype, CopyAndMoveAssignmentKeepIndependentState)
 
     EXPECT_EQ(describe(source), "JsonReportExporter{title=Source, pretty_print=true, columns=[id, payload]}\n");
     EXPECT_EQ(describe(moved), "JsonReportExporter{title=Copied source, pretty_print=true, columns=[id, payload, checksum]}\n");
+}
+
+TEST(ModernJsonPrototype, MoveConstructionTransfersState)
+{
+    JsonReportExporter source{"Source", true};
+    source.add_column("id");
+    source.add_column("payload");
+
+    JsonReportExporter moved{std::move(source)};
+    moved.add_column("checksum");
+
+    EXPECT_EQ(describe(moved), "JsonReportExporter{title=Source, pretty_print=true, columns=[id, payload, checksum]}\n");
 }
 
 TEST(ModernJsonPrototype, SelfAssignmentKeepsState)
