@@ -1,27 +1,57 @@
+#include <Shapes_strategy_classic/ApiDrawStrategy.hpp>
 #include <Shapes_strategy_classic/Circle_strategy.hpp>
 #include <Shapes_strategy_classic/Rectangle_strategy.hpp>
+#include <Shapes_strategy_classic/StarDrawStrategy.hpp>
 #include <Shapes_strategy_classic/Triangle_strategy.hpp>
 #include <TestDoubles/Spies/RecordingDrawStrategy.hpp>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <iostream>
 #include <numbers>
+#include <sstream>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace {
 
 using shapes_strategy::Circle_strategy;
+using shapes_strategy::ApiDrawStrategy;
 using shapes_strategy::Rectangle_strategy;
+using shapes_strategy::StarDrawStrategy;
 using shapes_strategy::Triangle_strategy;
 using test_doubles::spies::DrawCall;
 using test_doubles::spies::expect_draw_call;
 using test_doubles::spies::make_recording_strategy;
 using testing::DoubleNear;
+using testing::HasSubstr;
 using testing::Throws;
 
 constexpr double tolerance = 1e-9;
+
+class CoutCapture {
+public:
+    CoutCapture()
+        : old_buffer_{std::cout.rdbuf(output_.rdbuf())}
+    {
+    }
+
+    ~CoutCapture()
+    {
+        std::cout.rdbuf(old_buffer_);
+    }
+
+    [[nodiscard]] std::string str() const
+    {
+        return output_.str();
+    }
+
+private:
+    std::ostringstream output_;
+    std::streambuf* old_buffer_;
+};
 
 TEST(ClassicStrategyCircle, CalculatesArea)
 {
@@ -112,6 +142,62 @@ TEST(ClassicStrategy, RejectsNullStrategyWhenReplacing)
     };
 
     EXPECT_THAT(replace_with_null_strategy, Throws<std::invalid_argument>());
+}
+
+TEST(ClassicApiDrawStrategy, WritesShapeDetails)
+{
+    const ApiDrawStrategy strategy;
+    const CoutCapture capture;
+
+    strategy.draw_circle(2.5);
+    strategy.draw_rectangle(4.0, 2.5);
+    strategy.draw_triangle(6.0, 3.0);
+
+    EXPECT_EQ(
+        capture.str(),
+        "Circle with radius 2.5 has been sent to the API\n"
+        "Rectangle with width 4 and height 2.5 has been sent to the API\n"
+        "Triangle with base 6 and height 3 has been sent to the API\n");
+}
+
+TEST(ClassicStarDrawStrategy, DrawsCircleWithStars)
+{
+    const StarDrawStrategy strategy;
+    const CoutCapture capture;
+
+    strategy.draw_circle(1.4);
+
+    EXPECT_THAT(capture.str(), HasSubstr("Circle with radius 1.4\n"));
+    EXPECT_THAT(capture.str(), HasSubstr("***"));
+}
+
+TEST(ClassicStarDrawStrategy, DrawsRectangleWithStars)
+{
+    const StarDrawStrategy strategy;
+    const CoutCapture capture;
+
+    strategy.draw_rectangle(3.0, 2.0);
+
+    EXPECT_EQ(
+        capture.str(),
+        "Rectangle with width 3 and height 2\n"
+        "***\n"
+        "***\n");
+}
+
+TEST(ClassicStarDrawStrategy, DrawsTriangleWithStars)
+{
+    const StarDrawStrategy strategy;
+    const CoutCapture capture;
+
+    strategy.draw_triangle(4.0, 3.0);
+
+    EXPECT_EQ(
+        capture.str(),
+        "Triangle with base 4 and height 3\n"
+        "*\n"
+        "**\n"
+        "***\n");
 }
 
 }  // namespace

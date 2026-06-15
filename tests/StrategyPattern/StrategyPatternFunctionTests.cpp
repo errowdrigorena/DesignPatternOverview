@@ -180,4 +180,44 @@ TEST(FunctionStrategyDrawStrategies, SendTriangleToApiWritesTriangleDetails)
     EXPECT_THAT(capture.str(), HasSubstr("Triangle with base 6 and height 3 has been sent to the API"));
 }
 
+TEST(FunctionStrategyDrawStrategies, DrawCircleWithStarsWritesCircle)
+{
+    const Circle circle{1.4, [](Circle const&) {}};
+    const CoutCapture capture;
+
+    draw_circle_with_stars(circle);
+
+    EXPECT_THAT(capture.str(), HasSubstr("Circle with radius 1.4\n"));
+    EXPECT_THAT(capture.str(), HasSubstr("***"));
+}
+
+TEST(FunctionStrategyDrawStrategies, DrawRectangleWithStarsWritesRectangle)
+{
+    const Rectangle rectangle{3.0, 2.0, [](Rectangle const&) {}};
+    const CoutCapture capture;
+
+    draw_rectangle_with_stars(rectangle);
+
+    EXPECT_EQ(
+        capture.str(),
+        "Rectangle with width 3 and height 2\n"
+        "***\n"
+        "***\n");
+}
+
+TEST(FunctionStrategyDrawStrategies, DrawTriangleWithStarsWritesTriangle)
+{
+    const Triangle triangle{4.0, 3.0, [](Triangle const&) {}};
+    const CoutCapture capture;
+
+    draw_triangle_with_stars(triangle);
+
+    EXPECT_EQ(
+        capture.str(),
+        "Triangle with base 4 and height 3\n"
+        "*\n"
+        "**\n"
+        "***\n");
+}
+
 }  // namespace
