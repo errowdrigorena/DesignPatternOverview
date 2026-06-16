@@ -1,43 +1,11 @@
 #pragma once
 
+#include <AdapterPattern_common/LegacyThermometerCApi.h>
+
 #include <memory>
 #include <string>
-#include <utility>
 
 namespace adapter_pattern_modern {
-
-class Sensor {
-public:
-    Sensor(std::string id, double temperature)
-        : id_{std::move(id)}
-        , temperature_{temperature}
-    {
-    }
-
-    [[nodiscard]] std::string id() const
-    {
-        return id_;
-    }
-
-    [[nodiscard]] double read_celsius() const
-    {
-        return temperature_;
-    }
-
-    void calibrate(double offset)
-    {
-        temperature_ += offset;
-    }
-
-private:
-    std::string id_;
-    double temperature_{};
-};
-
-inline Sensor make_fixed_sensor(std::string id, double temperature)
-{
-    return Sensor{std::move(id), temperature};
-}
 
 class ThermometerSensor {
 public:
@@ -54,13 +22,11 @@ public:
     void calibrate(double offset);
 
 private:
-    struct Impl;
-    std::unique_ptr<Impl> impl_;
-};
+    struct LegacyThermometerDeleter {
+        void operator()(legacy_thermometer_handle* handle) const;
+    };
 
-inline ThermometerSensor make_thermometer_sensor(std::string id, double initial_celsius)
-{
-    return ThermometerSensor{std::move(id), initial_celsius};
-}
+    std::unique_ptr<legacy_thermometer_handle, LegacyThermometerDeleter> handle_;
+};
 
 }  // namespace adapter_pattern_modern

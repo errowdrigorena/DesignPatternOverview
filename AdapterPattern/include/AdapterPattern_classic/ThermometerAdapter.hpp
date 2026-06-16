@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AdapterPattern_classic/TemperatureSensor.hpp>
+#include <AdapterPattern_common/LegacyThermometerCApi.h>
 
 #include <memory>
 
@@ -21,8 +22,11 @@ public:
     [[nodiscard]] std::string id() const override;
 
 private:
-    struct Impl;
-    std::unique_ptr<Impl> impl_;
+    struct LegacyThermometerDeleter {
+        void operator()(legacy_thermometer_handle* handle) const;
+    };
+
+    std::unique_ptr<legacy_thermometer_handle, LegacyThermometerDeleter> handle_;
 };
 
 }  // namespace adapter_pattern_classic

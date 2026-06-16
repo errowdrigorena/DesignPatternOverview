@@ -1,27 +1,9 @@
 #include <AdapterPattern_classic/ThermometerAdapter.hpp>
 
-#include <AdapterPattern_common/LegacyThermometerCApi.h>
-
-#include <memory>
-
 namespace adapter_pattern_classic {
 
-struct ThermometerAdapter::Impl {
-    Impl(const std::string& id, double initial_celsius)
-        : handle{legacy_thermometer_create(id.c_str(), initial_celsius)}
-    {
-    }
-
-    ~Impl()
-    {
-        legacy_thermometer_destroy(handle);
-    }
-
-    legacy_thermometer_handle* handle{};
-};
-
 ThermometerAdapter::ThermometerAdapter(std::string id, double initial_celsius)
-    : impl_{std::make_unique<Impl>(id, initial_celsius)}
+    : handle_{legacy_thermometer_create(id.c_str(), initial_celsius)}
 {
 }
 
@@ -33,17 +15,22 @@ ThermometerAdapter& ThermometerAdapter::operator=(ThermometerAdapter&&) noexcept
 
 double ThermometerAdapter::read_celsius() const
 {
-    return legacy_thermometer_read_celsius(impl_->handle);
+    return legacy_thermometer_read_celsius(handle_.get());
 }
 
 void ThermometerAdapter::calibrate(double offset)
 {
-    legacy_thermometer_calibrate(impl_->handle, offset);
+    legacy_thermometer_calibrate(handle_.get(), offset);
 }
 
 std::string ThermometerAdapter::id() const
 {
-    return legacy_thermometer_id(impl_->handle);
+    return legacy_thermometer_id(handle_.get());
+}
+
+void ThermometerAdapter::LegacyThermometerDeleter::operator()(legacy_thermometer_handle* handle) const
+{
+    legacy_thermometer_destroy(handle);
 }
 
 }  // namespace adapter_pattern_classic

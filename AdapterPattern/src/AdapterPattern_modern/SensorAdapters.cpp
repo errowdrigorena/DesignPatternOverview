@@ -1,27 +1,9 @@
 #include <AdapterPattern_modern/SensorAdapters.hpp>
 
-#include <AdapterPattern_common/LegacyThermometerCApi.h>
-
-#include <memory>
-
 namespace adapter_pattern_modern {
 
-struct ThermometerSensor::Impl {
-    Impl(const std::string& id, double initial_celsius)
-        : handle{legacy_thermometer_create(id.c_str(), initial_celsius)}
-    {
-    }
-
-    ~Impl()
-    {
-        legacy_thermometer_destroy(handle);
-    }
-
-    legacy_thermometer_handle* handle{};
-};
-
 ThermometerSensor::ThermometerSensor(std::string id, double initial_celsius)
-    : impl_{std::make_unique<Impl>(id, initial_celsius)}
+    : handle_{legacy_thermometer_create(id.c_str(), initial_celsius)}
 {
 }
 
@@ -33,17 +15,22 @@ ThermometerSensor& ThermometerSensor::operator=(ThermometerSensor&&) noexcept = 
 
 std::string ThermometerSensor::id() const
 {
-    return legacy_thermometer_id(impl_->handle);
+    return legacy_thermometer_id(handle_.get());
 }
 
 double ThermometerSensor::read_celsius() const
 {
-    return legacy_thermometer_read_celsius(impl_->handle);
+    return legacy_thermometer_read_celsius(handle_.get());
 }
 
 void ThermometerSensor::calibrate(double offset)
 {
-    legacy_thermometer_calibrate(impl_->handle, offset);
+    legacy_thermometer_calibrate(handle_.get(), offset);
+}
+
+void ThermometerSensor::LegacyThermometerDeleter::operator()(legacy_thermometer_handle* handle) const
+{
+    legacy_thermometer_destroy(handle);
 }
 
 }  // namespace adapter_pattern_modern
