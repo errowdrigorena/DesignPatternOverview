@@ -3,6 +3,7 @@ find_package(GTest CONFIG REQUIRED)
 include(GoogleTest)
 
 add_subdirectory(CommandPattern)
+add_subdirectory(AdapterPattern)
 add_subdirectory(DecoratorPattern)
 add_subdirectory(FacadePattern)
 add_subdirectory(ObserverPattern)

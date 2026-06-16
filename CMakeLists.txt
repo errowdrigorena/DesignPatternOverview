@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.25)
 
 find_program(GXX_15 g++-15 REQUIRED)
+find_program(GCC_15 gcc-15 REQUIRED)
+set(CMAKE_C_COMPILER ${GCC_15} CACHE FILEPATH "C compiler" FORCE)
 set(CMAKE_CXX_COMPILER ${GXX_15} CACHE FILEPATH "C++ compiler" FORCE)
 
-project(DesignPatternOverview LANGUAGES CXX)
+project(DesignPatternOverview LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -26,6 +28,7 @@ add_subdirectory(Shapes)
 add_subdirectory(StrategyPattern)
 add_subdirectory(ObserverPattern)
 add_subdirectory(CommandPattern)
+add_subdirectory(AdapterPattern)
 add_subdirectory(SimpleFactoryPseudoPattern)
 add_subdirectory(SingletonPattern)
 add_subdirectory(VisitorPattern)
@@ -44,6 +47,9 @@ if(BUILD_TESTING)
         set(COVERAGE_TEST_TARGETS
             CommandPatternClassicTests
             CommandPatternModernTests
+            AdapterPatternCommonTests
+            AdapterPatternClassicTests
+            AdapterPatternModernTests
             DecoratorPatternClassicTests
             DecoratorPatternModernTests
             FacadePatternClassicTests
