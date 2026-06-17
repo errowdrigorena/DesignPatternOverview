@@ -56,6 +56,8 @@ if(BUILD_TESTING)
             DecoratorPatternModernTests
             FacadePatternClassicTests
             InterpreterPatternClassicTests
+            InterpreterPatternModernBisonRulesTests
+            InterpreterPatternModernVariantAstTests
             MementoPatternClassicTests
             MementoPatternModernNestedSnapshotTests
             MementoPatternModernPersistentTests
