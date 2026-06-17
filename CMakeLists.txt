@@ -37,6 +37,7 @@ add_subdirectory(FacadePattern)
 add_subdirectory(MementoPattern)
 add_subdirectory(TemplateMethodPattern)
 add_subdirectory(PrototypePattern)
+add_subdirectory(InterpreterPattern)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
@@ -54,6 +55,7 @@ if(BUILD_TESTING)
             DecoratorPatternClassicTests
             DecoratorPatternModernTests
             FacadePatternClassicTests
+            InterpreterPatternClassicTests
             MementoPatternClassicTests
             MementoPatternModernNestedSnapshotTests
             MementoPatternModernPersistentTests
