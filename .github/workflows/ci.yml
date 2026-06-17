@@ -57,6 +57,7 @@ jobs:
           pip install "cmake>=3.25" "conan>=2,<3"
 
           echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
+          ln -sf "$(command -v gcc)" /usr/local/bin/gcc-15
           ln -sf "$(command -v g++)" /usr/local/bin/g++-15
           conan profile detect --force
 
@@ -109,6 +110,7 @@ jobs:
           pip install "cmake>=3.25" "conan>=2,<3" "gcovr>=8,<9"
 
           echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
+          ln -sf "$(command -v gcc)" /usr/local/bin/gcc-15
           ln -sf "$(command -v g++)" /usr/local/bin/g++-15
           conan profile detect --force
 
