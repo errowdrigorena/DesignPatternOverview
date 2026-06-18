@@ -2,6 +2,7 @@ build/
 build-*/
 .cache/
 CMakeUserPresets.json
+*.code-workspace
 /conan_provider.cmake
 /.codex/
 /.agents
