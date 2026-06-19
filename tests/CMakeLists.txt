@@ -4,6 +4,7 @@ include(GoogleTest)
 
 add_subdirectory(CommandPattern)
 add_subdirectory(AdapterPattern)
+add_subdirectory(AbstractFactoryPattern)
 add_subdirectory(DecoratorPattern)
 add_subdirectory(FacadePattern)
 add_subdirectory(FactoryMethodPattern)
