@@ -30,6 +30,7 @@ add_subdirectory(ObserverPattern)
 add_subdirectory(CommandPattern)
 add_subdirectory(AdapterPattern)
 add_subdirectory(SimpleFactoryPseudoPattern)
+add_subdirectory(FactoryMethodPattern)
 add_subdirectory(SingletonPattern)
 add_subdirectory(VisitorPattern)
 add_subdirectory(DecoratorPattern)
@@ -56,6 +57,9 @@ if(BUILD_TESTING)
             DecoratorPatternClassicTests
             DecoratorPatternModernTests
             FacadePatternClassicTests
+            FactoryMethodPatternClassicTests
+            FactoryMethodPatternModernTests
+            FactoryMethodPatternSimpleFactoryTests
             FlyweightPatternClassicTests
             FlyweightPatternModernByKindTests
             FlyweightPatternModernHandlePoolTests
