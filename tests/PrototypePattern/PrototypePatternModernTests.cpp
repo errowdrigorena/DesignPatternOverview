@@ -1,148 +1,113 @@
-#include <PrototypePattern_modern/Prototype.hpp>
+#include <PrototypePattern_modern/CirclePrototype.hpp>
+#include <PrototypePattern_modern/RectanglePrototype.hpp>
+#include <PrototypePattern_modern/ShapePrototype.hpp>
 
 #include <gtest/gtest.h>
 
 #include <memory>
 #include <sstream>
+#include <vector>
 
 namespace {
 
-using prototype_pattern_modern::CsvReportExporter;
-using prototype_pattern_modern::JsonReportExporter;
-using prototype_pattern_modern::ReportExporter;
-
-std::string describe(const ReportExporter& exporter)
+std::string describe(const prototype_pattern_modern::ShapePrototype& prototype)
 {
     std::ostringstream output;
-    exporter.describe(output);
+    prototype.draw(output);
     return output.str();
 }
 
-TEST(ModernCsvPrototype, DescribesReportWithoutColumns)
+TEST(ModernPrototype, DrawsACirclePrototype)
 {
-    const CsvReportExporter exporter{"Quarterly sales", ';'};
+    const prototype_pattern_modern::CirclePrototype prototype{
+        "port",
+        "green",
+        12.0,
+        16.0,
+        8.0};
 
-    EXPECT_EQ(describe(exporter), "CsvReportExporter{title=Quarterly sales, separator=';', columns=[]}\n");
+    EXPECT_EQ(describe(prototype), "CirclePrototype{name=port, color=green, x=12, y=16, radius=8}\n");
 }
 
-TEST(ModernCsvPrototype, CloneCopiesStateAndCanDiverge)
+TEST(ModernPrototype, DrawsARectanglePrototype)
 {
-    CsvReportExporter original{"Quarterly sales", ';'};
-    original.add_column("region");
-    original.add_column("revenue");
+    const prototype_pattern_modern::RectanglePrototype prototype{
+        "node",
+        "green",
+        0.0,
+        0.0,
+        96.0,
+        48.0};
 
-    const std::unique_ptr<ReportExporter> clone = original.clone();
-    clone->set_report_title("Monthly sales");
-    clone->add_column("margin");
+    EXPECT_EQ(describe(prototype), "RectanglePrototype{name=node, color=green, x=0, y=0, width=96, height=48}\n");
+}
 
-    EXPECT_EQ(
-        describe(original),
-        "CsvReportExporter{title=Quarterly sales, separator=';', columns=[region, revenue]}\n");
+TEST(ModernPrototype, CloneReturnsOwningPointer)
+{
+    const prototype_pattern_modern::CirclePrototype original{
+        "port",
+        "green",
+        12.0,
+        16.0,
+        8.0};
+
+    const std::unique_ptr<prototype_pattern_modern::ShapePrototype> clone = original.clone();
+
+    EXPECT_EQ(describe(*clone), "CirclePrototype{name=port, color=green, x=12, y=16, radius=8}\n");
+}
+
+TEST(ModernPrototype, MutatingCloneDoesNotChangeOriginal)
+{
+    const prototype_pattern_modern::RectanglePrototype original{
+        "node",
+        "green",
+        0.0,
+        0.0,
+        96.0,
+        48.0};
+    const auto clone = original.clone();
+
+    clone->set_name("selected-node");
+    clone->set_color("purple");
+    clone->move_to(32.0, 24.0);
+
+    EXPECT_EQ(describe(original), "RectanglePrototype{name=node, color=green, x=0, y=0, width=96, height=48}\n");
     EXPECT_EQ(
         describe(*clone),
-        "CsvReportExporter{title=Monthly sales, separator=';', columns=[region, revenue, margin]}\n");
+        "RectanglePrototype{name=selected-node, color=purple, x=32, y=24, width=96, height=48}\n");
 }
 
-TEST(ModernCsvPrototype, CopyAndMoveAssignmentKeepIndependentState)
+TEST(ModernPrototype, ClonesDifferentConcreteShapesThroughTheBaseType)
 {
-    CsvReportExporter source{"Source", '|'};
-    source.add_column("id");
-    source.add_column("amount");
-    CsvReportExporter copied{"Copied", ','};
+    std::vector<std::unique_ptr<prototype_pattern_modern::ShapePrototype>> palette;
+    palette.push_back(std::make_unique<prototype_pattern_modern::CirclePrototype>(
+        "port",
+        "green",
+        0.0,
+        0.0,
+        8.0));
+    palette.push_back(std::make_unique<prototype_pattern_modern::RectanglePrototype>(
+        "node",
+        "green",
+        0.0,
+        0.0,
+        96.0,
+        48.0));
 
-    copied = source;
-    copied.set_report_title("Copied source");
+    std::vector<std::unique_ptr<prototype_pattern_modern::ShapePrototype>> diagram_shapes;
+    for (const auto& prototype : palette) {
+        auto shape = prototype->clone();
+        shape->set_color("purple");
+        shape->move_to(32.0, 24.0);
+        diagram_shapes.push_back(std::move(shape));
+    }
 
-    CsvReportExporter moved{"Moved", ','};
-    moved = std::move(copied);
-    moved.add_column("status");
-
-    EXPECT_EQ(describe(source), "CsvReportExporter{title=Source, separator='|', columns=[id, amount]}\n");
-    EXPECT_EQ(describe(moved), "CsvReportExporter{title=Copied source, separator='|', columns=[id, amount, status]}\n");
-}
-
-TEST(ModernCsvPrototype, MoveConstructionTransfersState)
-{
-    CsvReportExporter source{"Source", '|'};
-    source.add_column("id");
-    source.add_column("amount");
-
-    CsvReportExporter moved{std::move(source)};
-    moved.add_column("status");
-
-    EXPECT_EQ(describe(moved), "CsvReportExporter{title=Source, separator='|', columns=[id, amount, status]}\n");
-}
-
-TEST(ModernCsvPrototype, SelfAssignmentKeepsState)
-{
-    CsvReportExporter exporter{"Self", ','};
-    exporter.add_column("id");
-
-    exporter = exporter;
-
-    EXPECT_EQ(describe(exporter), "CsvReportExporter{title=Self, separator=',', columns=[id]}\n");
-}
-
-TEST(ModernJsonPrototype, DescribesPrettyPrintedReport)
-{
-    JsonReportExporter exporter{"Audit", true};
-    exporter.add_column("actor");
-    exporter.add_column("event");
-
-    EXPECT_EQ(describe(exporter), "JsonReportExporter{title=Audit, pretty_print=true, columns=[actor, event]}\n");
-}
-
-TEST(ModernJsonPrototype, CloneCopiesStateAndCanDiverge)
-{
-    JsonReportExporter original{"Audit", false};
-    original.add_column("actor");
-
-    const std::unique_ptr<ReportExporter> clone = original.clone();
-    clone->set_report_title("Detailed audit");
-    clone->add_column("timestamp");
-
-    EXPECT_EQ(describe(original), "JsonReportExporter{title=Audit, pretty_print=false, columns=[actor]}\n");
-    EXPECT_EQ(describe(*clone), "JsonReportExporter{title=Detailed audit, pretty_print=false, columns=[actor, timestamp]}\n");
-}
-
-TEST(ModernJsonPrototype, CopyAndMoveAssignmentKeepIndependentState)
-{
-    JsonReportExporter source{"Source", true};
-    source.add_column("id");
-    source.add_column("payload");
-    JsonReportExporter copied{"Copied", false};
-
-    copied = source;
-    copied.set_report_title("Copied source");
-
-    JsonReportExporter moved{"Moved", false};
-    moved = std::move(copied);
-    moved.add_column("checksum");
-
-    EXPECT_EQ(describe(source), "JsonReportExporter{title=Source, pretty_print=true, columns=[id, payload]}\n");
-    EXPECT_EQ(describe(moved), "JsonReportExporter{title=Copied source, pretty_print=true, columns=[id, payload, checksum]}\n");
-}
-
-TEST(ModernJsonPrototype, MoveConstructionTransfersState)
-{
-    JsonReportExporter source{"Source", true};
-    source.add_column("id");
-    source.add_column("payload");
-
-    JsonReportExporter moved{std::move(source)};
-    moved.add_column("checksum");
-
-    EXPECT_EQ(describe(moved), "JsonReportExporter{title=Source, pretty_print=true, columns=[id, payload, checksum]}\n");
-}
-
-TEST(ModernJsonPrototype, SelfAssignmentKeepsState)
-{
-    JsonReportExporter exporter{"Self", false};
-    exporter.add_column("id");
-
-    exporter = exporter;
-
-    EXPECT_EQ(describe(exporter), "JsonReportExporter{title=Self, pretty_print=false, columns=[id]}\n");
+    EXPECT_EQ(describe(*palette[0]), "CirclePrototype{name=port, color=green, x=0, y=0, radius=8}\n");
+    EXPECT_EQ(describe(*palette[1]), "RectanglePrototype{name=node, color=green, x=0, y=0, width=96, height=48}\n");
+    EXPECT_EQ(describe(*diagram_shapes[0]), "CirclePrototype{name=port, color=purple, x=32, y=24, radius=8}\n");
+    EXPECT_EQ(
+        describe(*diagram_shapes[1]),
+        "RectanglePrototype{name=node, color=purple, x=32, y=24, width=96, height=48}\n");
 }
 
 }  // namespace

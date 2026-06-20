@@ -1,22 +1,26 @@
 add_library(PrototypePatternClassic
-    PrototypePattern_classic/Prototype.cpp
+    src/PrototypePattern_classic/CirclePrototype.cpp
+    src/PrototypePattern_classic/RectanglePrototype.cpp
 )
 
 target_include_directories(PrototypePatternClassic
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_compile_features(PrototypePatternClassic PUBLIC cxx_std_23)
 
-add_library(PrototypePatternModern INTERFACE)
-
-target_include_directories(PrototypePatternModern
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}
+add_library(PrototypePatternModern
+    src/PrototypePattern_modern/CirclePrototype.cpp
+    src/PrototypePattern_modern/RectanglePrototype.cpp
 )
 
-target_compile_features(PrototypePatternModern INTERFACE cxx_std_23)
+target_include_directories(PrototypePatternModern
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(PrototypePatternModern PUBLIC cxx_std_23)
 
 add_executable(PrototypePatternDemo
     src/PrototypePatternDemo.cpp
