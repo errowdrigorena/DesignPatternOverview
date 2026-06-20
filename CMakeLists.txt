@@ -27,6 +27,7 @@ include(CTest)
 add_subdirectory(Shapes)
 add_subdirectory(StrategyPattern)
 add_subdirectory(ObserverPattern)
+add_subdirectory(BuilderPattern)
 add_subdirectory(CommandPattern)
 add_subdirectory(AdapterPattern)
 add_subdirectory(AbstractFactoryPattern)
@@ -57,6 +58,8 @@ if(BUILD_TESTING)
             AdapterPatternModernTests
             AbstractFactoryPatternClassicTests
             AbstractFactoryPatternModernTests
+            BuilderPatternClassicTests
+            BuilderPatternModernTests
             DecoratorPatternClassicTests
             DecoratorPatternModernTests
             FacadePatternClassicTests
