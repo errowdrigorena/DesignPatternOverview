@@ -29,6 +29,7 @@ add_subdirectory(StrategyPattern)
 add_subdirectory(ObserverPattern)
 add_subdirectory(BuilderPattern)
 add_subdirectory(IteratorPattern)
+add_subdirectory(ChainOfResponsibilityPattern)
 add_subdirectory(CommandPattern)
 add_subdirectory(AdapterPattern)
 add_subdirectory(AbstractFactoryPattern)
@@ -64,6 +65,8 @@ if(BUILD_TESTING)
             IteratorPatternClassicTests
             IteratorPatternModernIteratorsTests
             IteratorPatternModernRangesTests
+            ChainOfResponsibilityPatternClassicTests
+            ChainOfResponsibilityPatternModernTests
             DecoratorPatternClassicTests
             DecoratorPatternModernTests
             FacadePatternClassicTests
