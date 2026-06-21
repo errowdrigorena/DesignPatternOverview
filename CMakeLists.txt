@@ -42,6 +42,7 @@ add_subdirectory(DecoratorPattern)
 add_subdirectory(FacadePattern)
 add_subdirectory(FlyweightPattern)
 add_subdirectory(MementoPattern)
+add_subdirectory(MediatorPattern)
 add_subdirectory(TemplateMethodPattern)
 add_subdirectory(PrototypePattern)
 add_subdirectory(InterpreterPattern)
@@ -89,6 +90,8 @@ if(BUILD_TESTING)
             MementoPatternModernPersistentTests
             MementoPatternModernValueSnapshotTests
             MementoPatternModernVectorHistoryTests
+            MediatorPatternClassicTests
+            MediatorPatternModernTests
             ObserverPatternClassicTests
             ObserverPatternModernTests
             PrototypePatternClassicTests
