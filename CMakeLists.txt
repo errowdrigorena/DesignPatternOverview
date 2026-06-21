@@ -32,6 +32,7 @@ add_subdirectory(IteratorPattern)
 add_subdirectory(ChainOfResponsibilityPattern)
 add_subdirectory(CommandPattern)
 add_subdirectory(AdapterPattern)
+add_subdirectory(BridgePattern)
 add_subdirectory(AbstractFactoryPattern)
 add_subdirectory(SimpleFactoryPseudoPattern)
 add_subdirectory(FactoryMethodPattern)
@@ -58,6 +59,8 @@ if(BUILD_TESTING)
             AdapterPatternCommonTests
             AdapterPatternClassicTests
             AdapterPatternModernTests
+            BridgePatternClassicTests
+            BridgePatternModernTests
             AbstractFactoryPatternClassicTests
             AbstractFactoryPatternModernTests
             BuilderPatternClassicTests
