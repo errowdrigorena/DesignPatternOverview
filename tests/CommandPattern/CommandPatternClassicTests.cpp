@@ -28,7 +28,7 @@ TEST(ClassicDoCoolCommand, ExecuteWritesMessage)
     command.execute();
     const auto output = testing::internal::GetCapturedStdout();
 
-    EXPECT_THAT(output, HasSubstr("doing something cool"));
+    EXPECT_THAT(output, testing::Eq("doing something cool\n"));
 }
 
 TEST(ClassicDoCoolCommand, UndoWritesMessage)
@@ -39,7 +39,7 @@ TEST(ClassicDoCoolCommand, UndoWritesMessage)
     command.undo();
     const auto output = testing::internal::GetCapturedStdout();
 
-    EXPECT_THAT(output, HasSubstr("undoing something cool"));
+    EXPECT_THAT(output, testing::Eq("undoing something cool\n"));
 }
 
 TEST(ClassicDoBoringCommand, ExecuteWritesMessage)
@@ -50,7 +50,7 @@ TEST(ClassicDoBoringCommand, ExecuteWritesMessage)
     command.execute();
     const auto output = testing::internal::GetCapturedStdout();
 
-    EXPECT_THAT(output, HasSubstr("doing something boring"));
+    EXPECT_THAT(output, testing::Eq("doing something boring\n"));
 }
 
 TEST(ClassicDoBoringCommand, UndoWritesMessage)
@@ -61,7 +61,7 @@ TEST(ClassicDoBoringCommand, UndoWritesMessage)
     command.undo();
     const auto output = testing::internal::GetCapturedStdout();
 
-    EXPECT_THAT(output, HasSubstr("undoing something boring"));
+    EXPECT_THAT(output, testing::Eq("undoing something boring\n"));
 }
 
 TEST(ClassicCommandHistory, ExecuteRunsCommand)

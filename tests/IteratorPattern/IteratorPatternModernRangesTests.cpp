@@ -28,7 +28,7 @@ TEST(IteratorModernRanges, TraversesPolymorphicShapesAsARange)
     static_assert(std::same_as<decltype(shape_range.begin()), decltype(shape_range.end())>);
 
     std::vector<double> areas;
-    for (const shapes_traditional::Shapes& shape : shape_range) {
+    for (const shapes_traditional::Shape& shape : shape_range) {
         areas.push_back(shape.calculate_area());
     }
 

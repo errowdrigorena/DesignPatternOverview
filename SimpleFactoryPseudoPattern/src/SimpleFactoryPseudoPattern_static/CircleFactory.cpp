@@ -4,7 +4,7 @@
 
 namespace simple_factory_pseudo_pattern_static {
 
-std::unique_ptr<shapes_traditional::Shapes> CircleFactory::create() const
+std::unique_ptr<shapes_traditional::Shape> CircleFactory::create() const
 {
     return std::make_unique<shapes_traditional::Circle>(6.0);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <memory>
 #include <ostream>
@@ -11,7 +11,7 @@ class ShapeCreator {
 public:
     virtual ~ShapeCreator() = default;
 
-    [[nodiscard]] std::unique_ptr<shapes_traditional::Shapes> create() const
+    [[nodiscard]] std::unique_ptr<shapes_traditional::Shape> create() const
     {
         return create_shape();
     }
@@ -29,7 +29,7 @@ public:
     }
 
 private:
-    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shapes> create_shape() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shape> create_shape() const = 0;
 };
 
 }  // namespace factory_method_pattern_classic

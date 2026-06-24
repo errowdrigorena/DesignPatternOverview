@@ -13,7 +13,7 @@ int main()
     shapes.add(shapes_traditional::Rectangle::create(4.0, 2.0));
     shapes.add(shapes_traditional::Triangle::create(6.0, 3.0));
 
-    for (const shapes_traditional::Shapes& shape : shapes.shapes()) {
+    for (const shapes_traditional::Shape& shape : shapes.shapes()) {
         std::cout << shape.calculate_area() << '\n';
     }
 }

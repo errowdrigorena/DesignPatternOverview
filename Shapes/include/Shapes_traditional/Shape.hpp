@@ -2,9 +2,9 @@
 
 namespace shapes_traditional {
 
-class Shapes {
+class Shape {
 public:
-    virtual ~Shapes() = default;
+    virtual ~Shape() = default;
 
     virtual void draw() const = 0;
     [[nodiscard]] virtual double calculate_area() const = 0;

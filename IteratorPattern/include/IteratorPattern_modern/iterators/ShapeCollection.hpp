@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <memory>
 #include <utility>
@@ -10,10 +10,10 @@ namespace iterator_pattern_modern::iterators {
 
 class ShapeCollection {
 public:
-    using iterator = std::vector<std::unique_ptr<shapes_traditional::Shapes>>::iterator;
-    using const_iterator = std::vector<std::unique_ptr<shapes_traditional::Shapes>>::const_iterator;
+    using iterator = std::vector<std::unique_ptr<shapes_traditional::Shape>>::iterator;
+    using const_iterator = std::vector<std::unique_ptr<shapes_traditional::Shape>>::const_iterator;
 
-    void add(std::unique_ptr<shapes_traditional::Shapes> shape);
+    void add(std::unique_ptr<shapes_traditional::Shape> shape);
 
     [[nodiscard]] std::pair<iterator, iterator> iterators() noexcept;
     [[nodiscard]] std::pair<const_iterator, const_iterator> iterators() const noexcept;
@@ -30,7 +30,7 @@ public:
     // }
 
 private:
-    std::vector<std::unique_ptr<shapes_traditional::Shapes>> shapes_;
+    std::vector<std::unique_ptr<shapes_traditional::Shape>> shapes_;
 };
 
 }  // namespace iterator_pattern_modern::iterators

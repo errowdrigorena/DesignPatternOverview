@@ -2,7 +2,7 @@
 
 #include <Shapes_traditional/Circle.hpp>
 #include <Shapes_traditional/Rectangle.hpp>
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 #include <Shapes_traditional/Triangle.hpp>
 
 #include <memory>
@@ -19,7 +19,7 @@ class ShapeFactory;
 template <>
 class ShapeFactory<CircleTag> {
 public:
-    [[nodiscard]] static std::unique_ptr<shapes_traditional::Shapes> create()
+    [[nodiscard]] static std::unique_ptr<shapes_traditional::Shape> create()
     {
         return std::make_unique<shapes_traditional::Circle>(6.0);
     }
@@ -28,7 +28,7 @@ public:
 template <>
 class ShapeFactory<RectangleTag> {
 public:
-    [[nodiscard]] static std::unique_ptr<shapes_traditional::Shapes> create()
+    [[nodiscard]] static std::unique_ptr<shapes_traditional::Shape> create()
     {
         return std::make_unique<shapes_traditional::Rectangle>(4.0, 3.0);
     }
@@ -37,7 +37,7 @@ public:
 template <>
 class ShapeFactory<TriangleTag> {
 public:
-    [[nodiscard]] static std::unique_ptr<shapes_traditional::Shapes> create()
+    [[nodiscard]] static std::unique_ptr<shapes_traditional::Shape> create()
     {
         return std::make_unique<shapes_traditional::Triangle>(4.0, 3.0);
     }

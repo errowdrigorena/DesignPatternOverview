@@ -2,7 +2,7 @@ add_library(StrategyPattern
     src/Shapes_strategy_classic/ApiDrawStrategy.cpp
     src/Shapes_strategy_classic/Circle_strategy.cpp
     src/Shapes_strategy_classic/Rectangle_strategy.cpp
-    src/Shapes_strategy_classic/Shapes.cpp
+    src/Shapes_strategy_classic/Shape.cpp
     src/Shapes_strategy_classic/StarDrawStrategy.cpp
     src/Shapes_strategy_classic/Triangle_strategy.cpp
 )

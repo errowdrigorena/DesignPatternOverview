@@ -4,7 +4,7 @@
 
 namespace {
 
-void draw_and_print_area(const shapes_traditional::Shapes& shape)
+void draw_and_print_area(const shapes_traditional::Shape& shape)
 {
     shape.draw();
     std::cout << "Area: " << shape.calculate_area() << '\n';

@@ -8,7 +8,7 @@ Triangle_strategy::Triangle_strategy(
     const double base,
     const double height,
     std::unique_ptr<DrawStrategy> draw_strategy)
-    : Shapes{std::move(draw_strategy)}
+    : Shape{std::move(draw_strategy)}
     , base_{base}
     , height_{height}
 {

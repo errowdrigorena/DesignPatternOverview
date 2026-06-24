@@ -5,7 +5,7 @@
 #include <FactoryMethodPattern_modern/ShapeRegistry.hpp>
 #include <Shapes_traditional/Circle.hpp>
 #include <Shapes_traditional/Rectangle.hpp>
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 #include <Shapes_traditional/Triangle.hpp>
 #include <SimpleFactoryPseudoPattern_common/ShapeType.hpp>
 
@@ -34,8 +34,8 @@ TEST(FactoryMethodModern, DynamicRegistryCreatesKnownShape)
 
 TEST(FactoryMethodModern, DynamicFactoryRejectsUnknownKey)
 {
-    factory_method_pattern_modern::DynamicFactory<shapes_traditional::Shapes, std::string> factory;
-    factory.register_creator("circle", [] -> std::unique_ptr<shapes_traditional::Shapes> {
+    factory_method_pattern_modern::DynamicFactory<shapes_traditional::Shape, std::string> factory;
+    factory.register_creator("circle", [] -> std::unique_ptr<shapes_traditional::Shape> {
         return std::make_unique<shapes_traditional::Circle>(6.0);
     });
 
@@ -49,7 +49,7 @@ TEST(FactoryMethodModern, DynamicFactoryRejectsUnknownKey)
 TEST(FactoryMethodModern, ConcreteCreatorForwardsConstructorArguments)
 {
     const factory_method_pattern_modern::ConcreteCreator<
-        shapes_traditional::Shapes,
+        shapes_traditional::Shape,
         shapes_traditional::Rectangle,
         double,
         double>

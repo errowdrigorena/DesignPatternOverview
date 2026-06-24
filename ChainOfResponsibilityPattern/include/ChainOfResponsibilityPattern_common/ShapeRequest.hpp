@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <optional>
 
@@ -12,7 +12,7 @@ enum class ShapeOperation {
 };
 
 struct ShapeRequest {
-    const shapes_traditional::Shapes& shape;
+    const shapes_traditional::Shape& shape;
     ShapeOperation operation;
     std::optional<double> area;
 };

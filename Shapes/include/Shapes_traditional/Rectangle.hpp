@@ -1,16 +1,16 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <memory>
 
 namespace shapes_traditional {
 
-class Rectangle final : public Shapes {
+class Rectangle final : public Shape {
 public:
     Rectangle(double width, double height);
 
-    [[nodiscard]] static std::unique_ptr<Shapes> create(double width, double height);
+    [[nodiscard]] static std::unique_ptr<Shape> create(double width, double height);
 
     void draw() const override;
     [[nodiscard]] double calculate_area() const override;

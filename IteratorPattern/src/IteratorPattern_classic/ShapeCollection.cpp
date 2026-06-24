@@ -6,7 +6,7 @@
 
 namespace iterator_pattern_classic {
 
-void ShapeCollection::add(std::unique_ptr<shapes_traditional::Shapes> shape)
+void ShapeCollection::add(std::unique_ptr<shapes_traditional::Shape> shape)
 {
     if (shape == nullptr) {
         throw std::invalid_argument{"A shape collection cannot contain null shapes"};

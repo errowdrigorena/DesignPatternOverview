@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <memory>
 
@@ -10,12 +10,12 @@ class ShapeFamilyFactory {
 public:
     virtual ~ShapeFamilyFactory() = default;
 
-    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shapes> create_circle(
+    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shape> create_circle(
         double radius) const = 0;
-    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shapes> create_rectangle(
+    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shape> create_rectangle(
         double width,
         double height) const = 0;
-    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shapes> create_triangle(
+    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shape> create_triangle(
         double base,
         double height) const = 0;
 };

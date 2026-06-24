@@ -4,7 +4,7 @@
 
 namespace factory_method_pattern_classic {
 
-std::unique_ptr<shapes_traditional::Shapes> CircleCreator::create_shape() const
+std::unique_ptr<shapes_traditional::Shape> CircleCreator::create_shape() const
 {
     return std::make_unique<shapes_traditional::Circle>(6.0);
 }

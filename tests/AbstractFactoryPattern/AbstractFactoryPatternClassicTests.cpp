@@ -13,7 +13,7 @@ namespace {
 constexpr double tolerance = 1e-9;
 
 template <typename Shape>
-void expect_shape_family(const shapes_traditional::Shapes& shape, const std::string_view family)
+void expect_shape_family(const shapes_traditional::Shape& shape, const std::string_view family)
 {
     const auto* styled_shape = dynamic_cast<const abstract_factory_pattern_common::StyledShape*>(&shape);
     ASSERT_THAT(styled_shape, testing::NotNull());

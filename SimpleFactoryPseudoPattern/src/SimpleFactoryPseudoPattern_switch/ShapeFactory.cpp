@@ -8,7 +8,7 @@
 
 namespace simple_factory_pseudo_pattern_switch {
 
-std::unique_ptr<shapes_traditional::Shapes> ShapeFactory::create(
+std::unique_ptr<shapes_traditional::Shape> ShapeFactory::create(
     const simple_factory_pseudo_pattern::ShapeType shape_type) const
 {
     switch (shape_type) {

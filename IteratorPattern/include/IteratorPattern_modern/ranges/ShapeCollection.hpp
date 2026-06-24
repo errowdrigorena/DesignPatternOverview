@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <memory>
 #include <ranges>
@@ -12,7 +12,7 @@ namespace iterator_pattern_modern::ranges {
 
 class ShapeCollection {
 public:
-    void add(std::unique_ptr<shapes_traditional::Shapes> shape)
+    void add(std::unique_ptr<shapes_traditional::Shape> shape)
     {
         if (!shape) {
             throw std::invalid_argument("A shape collection cannot contain null shapes");
@@ -23,13 +23,13 @@ public:
 
     [[nodiscard]] auto shapes() const
     {
-        return shapes_ | std::views::transform([](const auto& shape) -> const shapes_traditional::Shapes& {
+        return shapes_ | std::views::transform([](const auto& shape) -> const shapes_traditional::Shape& {
                    return *shape;
                });
     }
 
 private:
-    std::vector<std::unique_ptr<shapes_traditional::Shapes>> shapes_;
+    std::vector<std::unique_ptr<shapes_traditional::Shape>> shapes_;
 };
 
 }  // namespace iterator_pattern_modern::ranges

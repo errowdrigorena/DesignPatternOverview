@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 #include <SimpleFactoryPseudoPattern_common/ShapeType.hpp>
 #include <SimpleFactoryPseudoPattern_switch/ShapeFactory.hpp>
 
@@ -10,7 +10,7 @@ namespace factory_method_pattern_simple_factory {
 
 class ShapeScene {
 public:
-    [[nodiscard]] std::unique_ptr<shapes_traditional::Shapes> add_shape(
+    [[nodiscard]] std::unique_ptr<shapes_traditional::Shape> add_shape(
         simple_factory_pseudo_pattern::ShapeType shape_type) const
     {
         return factory_.create(shape_type);

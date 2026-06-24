@@ -26,7 +26,7 @@ bool ShapeCollectionIterator::is_done() const
     return current_index_ >= collection_.shapes_.size();
 }
 
-const shapes_traditional::Shapes& ShapeCollectionIterator::current_item() const
+const shapes_traditional::Shape& ShapeCollectionIterator::current_item() const
 {
     if (is_done()) {
         throw std::out_of_range{"Cannot read past the end of a shape collection"};

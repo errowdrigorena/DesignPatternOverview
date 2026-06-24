@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <functional>
 #include <memory>
@@ -8,9 +8,9 @@
 
 namespace abstract_factory_pattern_modern {
 
-using CircleCreator = std::function<std::unique_ptr<shapes_traditional::Shapes>(double)>;
-using RectangleCreator = std::function<std::unique_ptr<shapes_traditional::Shapes>(double, double)>;
-using TriangleCreator = std::function<std::unique_ptr<shapes_traditional::Shapes>(double, double)>;
+using CircleCreator = std::function<std::unique_ptr<shapes_traditional::Shape>(double)>;
+using RectangleCreator = std::function<std::unique_ptr<shapes_traditional::Shape>(double, double)>;
+using TriangleCreator = std::function<std::unique_ptr<shapes_traditional::Shape>(double, double)>;
 
 struct ShapeFamilyFactory {
     std::string_view family;

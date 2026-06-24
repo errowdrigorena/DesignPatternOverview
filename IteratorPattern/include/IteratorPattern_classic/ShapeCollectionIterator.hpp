@@ -14,7 +14,7 @@ public:
     void first() override;
     void next() override;
     [[nodiscard]] bool is_done() const override;
-    [[nodiscard]] const shapes_traditional::Shapes& current_item() const override;
+    [[nodiscard]] const shapes_traditional::Shape& current_item() const override;
 
 private:
     const ShapeCollection& collection_;

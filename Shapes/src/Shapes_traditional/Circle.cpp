@@ -21,7 +21,7 @@ double Circle::calculate_area() const
     return std::numbers::pi_v<double> * radius_ * radius_;
 }
 
-std::unique_ptr<Shapes> Circle::create(const double radius)
+std::unique_ptr<Shape> Circle::create(const double radius)
 {
     return std::make_unique<Circle>(radius);
 }

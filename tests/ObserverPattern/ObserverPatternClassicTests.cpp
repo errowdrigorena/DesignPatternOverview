@@ -13,7 +13,6 @@ namespace {
 using observer_pattern::Event_enum;
 using observer_pattern::Subject;
 using testing::ElementsAre;
-using testing::HasSubstr;
 using testing::IsEmpty;
 using test_doubles::spies::RecordingObserver;
 using test_doubles::spies::SelfUnsubscribingObserver;
@@ -35,7 +34,7 @@ TEST(ClassicConsoleObserver, UpdateWritesObserverNameAndEvent)
     observer.update(Event_enum::add);
     const auto output = testing::internal::GetCapturedStdout();
 
-    EXPECT_THAT(output, HasSubstr("screen got message add"));
+    EXPECT_THAT(output, testing::Eq("screen got message add\n"));
 }
 
 TEST(ClassicSubject, NotifyUpdatesSubscribedObservers)

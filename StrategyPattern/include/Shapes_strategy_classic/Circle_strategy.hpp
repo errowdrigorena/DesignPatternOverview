@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Shapes_strategy_classic/Shapes.hpp>
+#include <Shapes_strategy_classic/Shape.hpp>
 
 #include <memory>
 
 namespace shapes_strategy {
 
-class Circle_strategy final : public Shapes {
+class Circle_strategy final : public Shape {
 public:
     Circle_strategy(double radius, std::unique_ptr<DrawStrategy> draw_strategy);
 

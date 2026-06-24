@@ -22,7 +22,7 @@ double Triangle::calculate_area() const
     return base_ * height_ / 2.0;
 }
 
-std::unique_ptr<Shapes> Triangle::create(const double base, const double height)
+std::unique_ptr<Shape> Triangle::create(const double base, const double height)
 {
     return std::make_unique<Triangle>(base, height);
 }

@@ -7,7 +7,7 @@
 
 namespace abstract_factory_pattern_classic {
 
-using ShapeCollection = std::vector<std::unique_ptr<shapes_traditional::Shapes>>;
+using ShapeCollection = std::vector<std::unique_ptr<shapes_traditional::Shape>>;
 
 class ShapeScene {
 public:

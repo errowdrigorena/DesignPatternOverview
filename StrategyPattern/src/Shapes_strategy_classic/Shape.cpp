@@ -1,11 +1,11 @@
-#include <Shapes_strategy_classic/Shapes.hpp>
+#include <Shapes_strategy_classic/Shape.hpp>
 
 #include <stdexcept>
 #include <utility>
 
 namespace shapes_strategy {
 
-Shapes::Shapes(std::unique_ptr<DrawStrategy> draw_strategy)
+Shape::Shape(std::unique_ptr<DrawStrategy> draw_strategy)
     : draw_strategy_{std::move(draw_strategy)}
 {
     if (!draw_strategy_) {
@@ -13,7 +13,7 @@ Shapes::Shapes(std::unique_ptr<DrawStrategy> draw_strategy)
     }
 }
 
-void Shapes::set_strategy(std::unique_ptr<DrawStrategy> draw_strategy)
+void Shape::set_strategy(std::unique_ptr<DrawStrategy> draw_strategy)
 {
     if (!draw_strategy) {
         throw std::invalid_argument{"draw_strategy cannot be null"};

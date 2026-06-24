@@ -6,10 +6,10 @@
 
 namespace shapes_strategy {
 
-class Shapes {
+class Shape {
 public:
-    explicit Shapes(std::unique_ptr<DrawStrategy> draw_strategy);
-    virtual ~Shapes() = default;
+    explicit Shape(std::unique_ptr<DrawStrategy> draw_strategy);
+    virtual ~Shape() = default;
 
     virtual void draw() const = 0;
     [[nodiscard]] virtual double calculate_area() const = 0;

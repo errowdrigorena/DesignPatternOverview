@@ -1,7 +1,7 @@
 #include <Shapes_strategy_classic/ApiDrawStrategy.hpp>
 #include <Shapes_strategy_classic/Circle_strategy.hpp>
 #include <Shapes_strategy_classic/Rectangle_strategy.hpp>
-#include <Shapes_strategy_classic/Shapes.hpp>
+#include <Shapes_strategy_classic/Shape.hpp>
 #include <Shapes_strategy_classic/StarDrawStrategy.hpp>
 #include <Shapes_strategy_classic/Triangle_strategy.hpp>
 
@@ -11,7 +11,7 @@
 
 int main()
 {
-    std::vector<std::unique_ptr<shapes_strategy::Shapes>> shapes;
+    std::vector<std::unique_ptr<shapes_strategy::Shape>> shapes;
     shapes.push_back(std::make_unique<shapes_strategy::Rectangle_strategy>(
         4.0,
         3.0,

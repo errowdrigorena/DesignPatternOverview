@@ -8,7 +8,7 @@ Rectangle_strategy::Rectangle_strategy(
     const double width,
     const double height,
     std::unique_ptr<DrawStrategy> draw_strategy)
-    : Shapes{std::move(draw_strategy)}
+    : Shape{std::move(draw_strategy)}
     , width_{width}
     , height_{height}
 {

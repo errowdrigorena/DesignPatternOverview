@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Shapes_traditional/Shapes.hpp>
+#include <Shapes_traditional/Shape.hpp>
 
 #include <memory>
 
@@ -10,7 +10,7 @@ class ShapeFactory {
 public:
     virtual ~ShapeFactory() = default;
 
-    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shapes> create() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<shapes_traditional::Shape> create() const = 0;
 };
 
 }  // namespace simple_factory_pseudo_pattern_static

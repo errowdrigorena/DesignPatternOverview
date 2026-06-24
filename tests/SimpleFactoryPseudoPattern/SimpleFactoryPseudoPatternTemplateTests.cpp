@@ -16,7 +16,7 @@ using testing::NotNull;
 constexpr double tolerance = 1e-9;
 
 template <typename Shape>
-void expect_shape_with_area(const shapes_traditional::Shapes& shape, const double expected_area)
+void expect_shape_with_area(const shapes_traditional::Shape& shape, const double expected_area)
 {
     EXPECT_NE(dynamic_cast<const Shape*>(&shape), nullptr);
     EXPECT_THAT(shape.calculate_area(), DoubleNear(expected_area, tolerance));

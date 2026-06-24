@@ -8,7 +8,7 @@ namespace shapes_strategy {
 Circle_strategy::Circle_strategy(
     const double radius,
     std::unique_ptr<DrawStrategy> draw_strategy)
-    : Shapes{std::move(draw_strategy)}
+    : Shape{std::move(draw_strategy)}
     , radius_{radius}
 {
 }

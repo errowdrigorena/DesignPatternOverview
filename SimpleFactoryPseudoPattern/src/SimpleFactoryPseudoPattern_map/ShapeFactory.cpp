@@ -12,7 +12,7 @@
 namespace simple_factory_pseudo_pattern_map {
 namespace {
 
-using ShapeCreator = std::function<std::unique_ptr<shapes_traditional::Shapes>()>;
+using ShapeCreator = std::function<std::unique_ptr<shapes_traditional::Shape>()>;
 
 const std::unordered_map<std::string_view, ShapeCreator> shape_creators{
     {"circle", [] {
@@ -28,7 +28,7 @@ const std::unordered_map<std::string_view, ShapeCreator> shape_creators{
 
 }  // namespace
 
-std::unique_ptr<shapes_traditional::Shapes> ShapeFactory::create(
+std::unique_ptr<shapes_traditional::Shape> ShapeFactory::create(
     const std::string_view shape_name) const
 {
     const auto shape_creator = shape_creators.find(shape_name);

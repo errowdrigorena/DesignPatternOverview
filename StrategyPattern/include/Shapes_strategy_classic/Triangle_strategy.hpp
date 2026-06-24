@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Shapes_strategy_classic/Shapes.hpp>
+#include <Shapes_strategy_classic/Shape.hpp>
 
 #include <memory>
 
 namespace shapes_strategy {
 
-class Triangle_strategy final : public Shapes {
+class Triangle_strategy final : public Shape {
 public:
     Triangle_strategy(double base, double height, std::unique_ptr<DrawStrategy> draw_strategy);
 
