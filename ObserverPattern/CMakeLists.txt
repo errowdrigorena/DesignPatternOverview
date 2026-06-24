@@ -45,3 +45,26 @@ target_link_libraries(ObserverPatternFilteredDemo
     PRIVATE
         ObserverPatternModern
 )
+
+add_library(ObserverPatternBoost INTERFACE)
+
+target_include_directories(ObserverPatternBoost
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(ObserverPatternBoost INTERFACE cxx_std_23)
+
+target_link_libraries(ObserverPatternBoost
+    INTERFACE
+        boost::boost
+)
+
+add_executable(ObserverPatternBoostDemo
+    src/ObserverPatternBoostDemo.cpp
+)
+
+target_link_libraries(ObserverPatternBoostDemo
+    PRIVATE
+        ObserverPatternBoost
+)

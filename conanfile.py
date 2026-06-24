@@ -10,7 +10,11 @@ class DesignPatternOverviewConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
 
     def requirements(self):
+        self.requires("boost/1.86.0")
         self.test_requires("gtest/1.14.0")
+
+    def configure(self):
+        self.options["boost"].header_only = True
 
     def layout(self):
         cmake_layout(self)

@@ -32,3 +32,18 @@ target_link_libraries(ObserverPatternModernTests
 target_compile_features(ObserverPatternModernTests PRIVATE cxx_std_23)
 
 gtest_discover_tests(ObserverPatternModernTests)
+
+add_executable(ObserverPatternBoostTests
+    ObserverPatternBoostTests.cpp
+)
+
+target_link_libraries(ObserverPatternBoostTests
+    PRIVATE
+        ObserverPatternBoost
+        GTest::gmock
+        GTest::gtest_main
+)
+
+target_compile_features(ObserverPatternBoostTests PRIVATE cxx_std_23)
+
+gtest_discover_tests(ObserverPatternBoostTests)

@@ -64,3 +64,28 @@ target_link_libraries(FlyweightPatternModernStaticTableDemo
     PRIVATE
         FlyweightPatternModern
 )
+
+add_library(FlyweightPatternBoost
+    src/FlyweightPattern_boost/MapOverlay.cpp
+)
+
+target_include_directories(FlyweightPatternBoost
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(FlyweightPatternBoost PUBLIC cxx_std_23)
+
+target_link_libraries(FlyweightPatternBoost
+    PUBLIC
+        boost::boost
+)
+
+add_executable(FlyweightPatternBoostDemo
+    src/FlyweightPatternBoostDemo.cpp
+)
+
+target_link_libraries(FlyweightPatternBoostDemo
+    PRIVATE
+        FlyweightPatternBoost
+)

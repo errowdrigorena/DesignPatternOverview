@@ -67,3 +67,17 @@ target_link_libraries(FlyweightPatternModernStaticTableTests
 target_compile_features(FlyweightPatternModernStaticTableTests PRIVATE cxx_std_23)
 
 gtest_discover_tests(FlyweightPatternModernStaticTableTests)
+
+add_executable(FlyweightPatternBoostTests
+    FlyweightPatternBoostTests.cpp
+)
+
+target_link_libraries(FlyweightPatternBoostTests
+    PRIVATE
+        FlyweightPatternBoost
+        GTest::gtest_main
+)
+
+target_compile_features(FlyweightPatternBoostTests PRIVATE cxx_std_23)
+
+gtest_discover_tests(FlyweightPatternBoostTests)

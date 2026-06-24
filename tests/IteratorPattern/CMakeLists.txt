@@ -33,3 +33,15 @@ target_link_libraries(IteratorPatternModernRangesTests
 target_compile_features(IteratorPatternModernRangesTests PRIVATE cxx_std_23)
 
 gtest_discover_tests(IteratorPatternModernRangesTests)
+
+add_executable(IteratorPatternBoostTests IteratorPatternBoostTests.cpp)
+
+target_link_libraries(IteratorPatternBoostTests
+    PRIVATE
+        IteratorPatternBoost
+        GTest::gtest_main
+)
+
+target_compile_features(IteratorPatternBoostTests PRIVATE cxx_std_23)
+
+gtest_discover_tests(IteratorPatternBoostTests)

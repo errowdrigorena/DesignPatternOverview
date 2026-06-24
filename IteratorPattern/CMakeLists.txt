@@ -71,3 +71,29 @@ target_link_libraries(IteratorPatternModernRangesDemo
     PRIVATE
         IteratorPatternModernRanges
 )
+
+add_library(IteratorPatternBoost
+    src/IteratorPattern_boost/ShapeCollection.cpp
+)
+
+target_include_directories(IteratorPatternBoost
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(IteratorPatternBoost PUBLIC cxx_std_23)
+
+target_link_libraries(IteratorPatternBoost
+    PUBLIC
+        boost::boost
+        Shapes_traditional
+)
+
+add_executable(IteratorPatternBoostDemo
+    src/IteratorPatternBoostDemo.cpp
+)
+
+target_link_libraries(IteratorPatternBoostDemo
+    PRIVATE
+        IteratorPatternBoost
+)

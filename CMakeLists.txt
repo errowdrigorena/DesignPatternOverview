@@ -24,6 +24,8 @@ endif()
 
 include(CTest)
 
+find_package(Boost REQUIRED CONFIG)
+
 add_subdirectory(Shapes)
 add_subdirectory(StrategyPattern)
 add_subdirectory(ObserverPattern)
@@ -69,6 +71,7 @@ if(BUILD_TESTING)
             IteratorPatternClassicTests
             IteratorPatternModernIteratorsTests
             IteratorPatternModernRangesTests
+            IteratorPatternBoostTests
             ChainOfResponsibilityPatternClassicTests
             ChainOfResponsibilityPatternModernTests
             DecoratorPatternClassicTests
@@ -82,6 +85,7 @@ if(BUILD_TESTING)
             FlyweightPatternModernHandlePoolTests
             FlyweightPatternModernStaticTableTests
             FlyweightPatternModernTests
+            FlyweightPatternBoostTests
             InterpreterPatternClassicTests
             InterpreterPatternModernBisonRulesTests
             InterpreterPatternModernVariantAstTests
@@ -94,6 +98,7 @@ if(BUILD_TESTING)
             MediatorPatternModernTests
             ObserverPatternClassicTests
             ObserverPatternModernTests
+            ObserverPatternBoostTests
             PrototypePatternClassicTests
             PrototypePatternModernTests
             SimpleFactoryPseudoPatternRuntimeTests
