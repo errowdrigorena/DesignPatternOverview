@@ -1,3 +1,4 @@
+#include <AdapterPattern_common/LegacyThermometerCApi.h>
 #include <AdapterPattern_modern/SensorAdapters.hpp>
 
 #include <gmock/gmock.h>
@@ -19,12 +20,16 @@ TEST(ModernAdapter, ObjectAdaptsTheCApiToARegularCxxObject)
     EXPECT_DOUBLE_EQ(sensor.read_celsius(), 11.25);
 }
 
-TEST(ModernAdapter, ObjectOwnsTheAdaptedCResource)
+TEST(ModernAdapter, ObjectOwnsTheAdaptedCResourceAndReleasesItOnDestruction)
 {
-    ThermometerSensor sensor{"tank-1", 12.0};
+    EXPECT_EQ(legacy_thermometer_active_handles(), 0);
 
-    EXPECT_THAT(sensor.id(), Eq("tank-1"));
-    EXPECT_DOUBLE_EQ(sensor.read_celsius(), 12.0);
+    {
+        ThermometerSensor sensor{"tank-1", 12.0};
+        EXPECT_EQ(legacy_thermometer_active_handles(), 1);
+    }
+
+    EXPECT_EQ(legacy_thermometer_active_handles(), 0);
 }
 
 }  // namespace

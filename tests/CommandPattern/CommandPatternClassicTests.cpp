@@ -109,4 +109,24 @@ TEST(ClassicCommandHistory, UndoLastOnEmptyHistoryDoesNothing)
     EXPECT_THAT(events, IsEmpty());
 }
 
+TEST(ClassicCommand, ExecuteAndUndoProduceComplementaryOutputs)
+{
+    DoCoolCommand cool;
+    DoBoringCommand boring;
+
+    testing::internal::CaptureStdout();
+    cool.execute();
+    boring.execute();
+    boring.undo();
+    cool.undo();
+    const auto output = testing::internal::GetCapturedStdout();
+
+    EXPECT_EQ(
+        output,
+        "doing something cool\n"
+        "doing something boring\n"
+        "undoing something boring\n"
+        "undoing something cool\n");
+}
+
 }  // namespace

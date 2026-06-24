@@ -200,4 +200,35 @@ TEST(ClassicStarDrawStrategy, DrawsTriangleWithStars)
         "***\n");
 }
 
+TEST(ClassicStrategy, AnyShapeWorksWithAnyDrawStrategy)
+{
+    std::vector<DrawCall> calls;
+    const Circle_strategy circle{2.5, make_recording_strategy(calls)};
+    const Rectangle_strategy rectangle{4.0, 2.5, make_recording_strategy(calls)};
+    const Triangle_strategy triangle{6.0, 3.0, make_recording_strategy(calls)};
+
+    circle.draw();
+    rectangle.draw();
+    triangle.draw();
+
+    ASSERT_EQ(calls.size(), 3U);
+    expect_draw_call(calls[0], "circle", 2.5, std::nullopt);
+    expect_draw_call(calls[1], "rectangle", 4.0, 2.5);
+    expect_draw_call(calls[2], "triangle", 6.0, 3.0);
+}
+
+TEST(ClassicStrategy, ReplacingStrategyChangesDrawBehaviourWithoutChangingTheShape)
+{
+    std::vector<DrawCall> original_calls;
+    std::vector<DrawCall> replacement_calls;
+    Circle_strategy circle{2.0, make_recording_strategy(original_calls)};
+
+    circle.set_strategy(make_recording_strategy(replacement_calls));
+    circle.draw();
+
+    EXPECT_TRUE(original_calls.empty());
+    ASSERT_EQ(replacement_calls.size(), 1U);
+    expect_draw_call(replacement_calls.front(), "circle", 2.0, std::nullopt);
+}
+
 }  // namespace

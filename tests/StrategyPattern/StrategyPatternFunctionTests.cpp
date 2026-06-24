@@ -292,4 +292,28 @@ TEST(FunctionStrategyDrawStrategies, DrawTriangleWithStarsWritesTriangle)
         "***\n");
 }
 
+TEST(FunctionStrategy, EachShapeDelegatesToItsOwnTypeSpecificCallable)
+{
+    std::vector<DrawCall> calls;
+
+    const Circle circle{2.5, [&calls](Circle const& shape) {
+        calls.push_back({"circle", shape.radius(), std::nullopt});
+    }};
+    const Rectangle rectangle{4.0, 2.5, [&calls](Rectangle const& shape) {
+        calls.push_back({"rectangle", shape.width(), shape.height()});
+    }};
+    const Triangle triangle{6.0, 3.0, [&calls](Triangle const& shape) {
+        calls.push_back({"triangle", shape.base(), shape.height()});
+    }};
+
+    circle.draw();
+    rectangle.draw();
+    triangle.draw();
+
+    ASSERT_EQ(calls.size(), 3U);
+    expect_draw_call(calls[0], "circle", 2.5, std::nullopt);
+    expect_draw_call(calls[1], "rectangle", 4.0, 2.5);
+    expect_draw_call(calls[2], "triangle", 6.0, 3.0);
+}
+
 }  // namespace

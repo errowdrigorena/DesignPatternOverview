@@ -114,4 +114,33 @@ TEST(ClassicDrawVisitor, WritesShapeDescriptions)
         "Drawing a triangle with base 6 and height 3\n");
 }
 
+TEST(ClassicVisitor, TwoVisitorsExtractDifferentDataFromTheSameShapesWithoutModifyingThem)
+{
+    const Circle circle{3.0};
+    const Rectangle rectangle{4.0, 2.5};
+    const Triangle triangle{6.0, 3.0};
+
+    AreaVisitor area_circle;
+    AreaVisitor area_rect;
+    AreaVisitor area_tri;
+    circle.accept(area_circle);
+    rectangle.accept(area_rect);
+    triangle.accept(area_tri);
+
+    std::ostringstream output;
+    DrawVisitor draw_visitor{output};
+    circle.accept(draw_visitor);
+    rectangle.accept(draw_visitor);
+    triangle.accept(draw_visitor);
+
+    EXPECT_NEAR(area_circle.area(), std::numbers::pi_v<double> * 9.0, tolerance);
+    EXPECT_DOUBLE_EQ(area_rect.area(), 10.0);
+    EXPECT_DOUBLE_EQ(area_tri.area(), 9.0);
+    EXPECT_EQ(
+        output.str(),
+        "Drawing a circle with radius 3\n"
+        "Drawing a rectangle with width 4 and height 2.5\n"
+        "Drawing a triangle with base 6 and height 3\n");
+}
+
 }  // namespace

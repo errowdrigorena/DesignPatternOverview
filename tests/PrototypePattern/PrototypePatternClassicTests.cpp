@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <sstream>
+#include <vector>
 
 namespace {
 
@@ -78,6 +79,30 @@ TEST(ClassicPrototype, MutatingCloneDoesNotChangeOriginal)
     EXPECT_EQ(
         describe(*clone),
         "RectanglePrototype{name=selected-node, color=purple, x=32, y=24, width=96, height=48}\n");
+}
+
+TEST(ClassicPrototype, CloningFromAPaletteProducesIndependentInstancesWithoutKnowingConcreteTypes)
+{
+    std::vector<std::unique_ptr<prototype_pattern_classic::ShapePrototype>> palette;
+    palette.push_back(std::make_unique<prototype_pattern_classic::CirclePrototype>(
+        "port", "green", 0.0, 0.0, 8.0));
+    palette.push_back(std::make_unique<prototype_pattern_classic::RectanglePrototype>(
+        "node", "green", 0.0, 0.0, 96.0, 48.0));
+
+    std::vector<std::unique_ptr<prototype_pattern_classic::ShapePrototype>> diagram_shapes;
+    for (const auto& prototype : palette) {
+        auto shape = std::unique_ptr<prototype_pattern_classic::ShapePrototype>{prototype->clone()};
+        shape->set_color("purple");
+        shape->move_to(32.0, 24.0);
+        diagram_shapes.push_back(std::move(shape));
+    }
+
+    EXPECT_EQ(describe(*palette[0]), "CirclePrototype{name=port, color=green, x=0, y=0, radius=8}\n");
+    EXPECT_EQ(describe(*palette[1]), "RectanglePrototype{name=node, color=green, x=0, y=0, width=96, height=48}\n");
+    EXPECT_EQ(describe(*diagram_shapes[0]), "CirclePrototype{name=port, color=purple, x=32, y=24, radius=8}\n");
+    EXPECT_EQ(
+        describe(*diagram_shapes[1]),
+        "RectanglePrototype{name=node, color=purple, x=32, y=24, width=96, height=48}\n");
 }
 
 }  // namespace

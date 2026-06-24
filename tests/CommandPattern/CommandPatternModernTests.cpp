@@ -142,4 +142,22 @@ TEST(ModernCommandHistory, UndoLastOnEmptyHistoryDoesNothing)
     EXPECT_THAT(events, IsEmpty());
 }
 
+TEST(ModernCommand, ExecuteAndUndoAreComplementaryActions)
+{
+    std::vector<std::string> events;
+    command_pattern_modern::Command alpha{
+        [&events] { events.emplace_back("do alpha"); },
+        [&events] { events.emplace_back("undo alpha"); }};
+    command_pattern_modern::Command beta{
+        [&events] { events.emplace_back("do beta"); },
+        [&events] { events.emplace_back("undo beta"); }};
+
+    alpha.execute();
+    beta.execute();
+    beta.undo();
+    alpha.undo();
+
+    EXPECT_THAT(events, ElementsAre("do alpha", "do beta", "undo beta", "undo alpha"));
+}
+
 }  // namespace

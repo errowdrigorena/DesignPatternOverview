@@ -57,4 +57,24 @@ TEST(ChainOfResponsibilityClassic, ReturnsFalseWhenNoHandlerAcceptsRequest)
     EXPECT_FALSE(request.area.has_value());
 }
 
+TEST(ChainOfResponsibilityClassic, OneChainRoutesEachRequestTypeToTheCorrectHandlerWithoutCallerInvolvement)
+{
+    DrawShapeHandler draw_handler;
+    draw_handler.set_successor(std::make_unique<AreaShapeHandler>());
+
+    const auto circle = shapes_traditional::Circle::create(3.0);
+    const auto rectangle = shapes_traditional::Rectangle::create(4.0, 2.0);
+
+    ShapeRequest draw_request{*rectangle, ShapeOperation::draw};
+    testing::internal::CaptureStdout();
+    ASSERT_TRUE(draw_handler.handle(draw_request));
+    const auto output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Drawing a rectangle with width 4 and height 2\n");
+
+    ShapeRequest area_request{*circle, ShapeOperation::calculate_area};
+    ASSERT_TRUE(draw_handler.handle(area_request));
+    ASSERT_TRUE(area_request.area.has_value());
+    EXPECT_NEAR(*area_request.area, std::numbers::pi_v<double> * 9.0, tolerance);
+}
+
 }  // namespace

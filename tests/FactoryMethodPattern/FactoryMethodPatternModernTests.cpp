@@ -12,6 +12,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <numbers>
 #include <stdexcept>
 #include <string>
 
@@ -59,6 +60,24 @@ TEST(FactoryMethodModern, ConcreteCreatorForwardsConstructorArguments)
 
     ASSERT_THAT(shape, NotNull());
     expect_shape_with_area<shapes_traditional::Rectangle>(*shape, 10.0);
+}
+
+TEST(FactoryMethodModern, DynamicFactoryCreatesAllRegisteredCreators)
+{
+    factory_method_pattern_modern::DynamicFactory<shapes_traditional::Shape, std::string> factory;
+    factory.register_creator("circle", [] -> std::unique_ptr<shapes_traditional::Shape> {
+        return std::make_unique<shapes_traditional::Circle>(6.0);
+    });
+    factory.register_creator("rectangle", [] -> std::unique_ptr<shapes_traditional::Shape> {
+        return std::make_unique<shapes_traditional::Rectangle>(4.0, 3.0);
+    });
+    factory.register_creator("triangle", [] -> std::unique_ptr<shapes_traditional::Shape> {
+        return std::make_unique<shapes_traditional::Triangle>(4.0, 3.0);
+    });
+
+    EXPECT_NEAR(factory.create("circle")->calculate_area(), std::numbers::pi_v<double> * 36.0, 1e-9);
+    EXPECT_DOUBLE_EQ(factory.create("rectangle")->calculate_area(), 12.0);
+    EXPECT_DOUBLE_EQ(factory.create("triangle")->calculate_area(), 6.0);
 }
 
 }  // namespace
