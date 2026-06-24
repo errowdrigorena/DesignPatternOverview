@@ -48,6 +48,7 @@ add_subdirectory(MediatorPattern)
 add_subdirectory(TemplateMethodPattern)
 add_subdirectory(PrototypePattern)
 add_subdirectory(InterpreterPattern)
+add_subdirectory(ProxyPattern)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
@@ -115,6 +116,8 @@ if(BUILD_TESTING)
             TemplateMethodPatternDeducingThisTests
             VisitorPatternClassicTests
             VisitorPatternModernTests
+            ProxyPatternClassicTests
+            ProxyPatternModernTests
         )
 
         add_custom_target(coverage
