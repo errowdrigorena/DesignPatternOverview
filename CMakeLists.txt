@@ -49,6 +49,7 @@ add_subdirectory(TemplateMethodPattern)
 add_subdirectory(PrototypePattern)
 add_subdirectory(InterpreterPattern)
 add_subdirectory(ProxyPattern)
+add_subdirectory(StatePattern)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
@@ -118,6 +119,12 @@ if(BUILD_TESTING)
             VisitorPatternModernTests
             ProxyPatternClassicTests
             ProxyPatternModernTests
+            StatePatternClassicTests
+            StatePatternClassicGenericTests
+            StatePatternVariantTests
+            StatePatternTableTests
+            StatePatternBoostInspiredTests
+            StatePatternBoostTests
         )
 
         add_custom_target(coverage
