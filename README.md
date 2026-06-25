@@ -22,11 +22,12 @@ Cada patrón incluye:
 |---|---|---|
 | Simple Factory | Adapter | Chain of Responsibility |
 | Factory Method | Bridge | Command |
-| Abstract Factory | Decorator | Interpreter |
-| Builder | Facade | Iterator |
-| Prototype | Flyweight | Mediator |
-| Singleton | Proxy | Memento |
-| | | Observer |
+| Abstract Factory | Composite | Interpreter |
+| Builder | Decorator | Iterator |
+| Prototype | Facade | Mediator |
+| Singleton | Flyweight | Memento |
+| | Proxy | Observer |
+| | | State |
 | | | Strategy |
 | | | Template Method |
 | | | Visitor |

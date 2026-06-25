@@ -41,6 +41,7 @@ add_subdirectory(FactoryMethodPattern)
 add_subdirectory(SingletonPattern)
 add_subdirectory(VisitorPattern)
 add_subdirectory(DecoratorPattern)
+add_subdirectory(CompositePattern)
 add_subdirectory(FacadePattern)
 add_subdirectory(FlyweightPattern)
 add_subdirectory(MementoPattern)
@@ -76,6 +77,8 @@ if(BUILD_TESTING)
             IteratorPatternBoostTests
             ChainOfResponsibilityPatternClassicTests
             ChainOfResponsibilityPatternModernTests
+            CompositePatternClassicTests
+            CompositePatternModernTests
             DecoratorPatternClassicTests
             DecoratorPatternModernTests
             FacadePatternClassicTests
